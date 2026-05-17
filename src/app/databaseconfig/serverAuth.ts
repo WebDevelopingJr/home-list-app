@@ -1,3 +1,4 @@
+import { create } from 'domain'
 import { createClient } from './client-component'
 
 export async function registerUser(
@@ -17,6 +18,7 @@ export async function registerUser(
 
   return data
 }
+
 
 
 // databaseconfig/auth.ts
