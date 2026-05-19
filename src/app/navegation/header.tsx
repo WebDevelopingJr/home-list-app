@@ -21,27 +21,36 @@ export default function Header() {
     const router = useRouter()
 
     const supabase = createClient()
-     async function logOutUserFunction() {
-         try {
-             await logoutUser()
-             setUserInfo(null)
-             setUserMenu(false)
-         }catch(error) {
-             console.log(error)
-         }
-         router.refresh()
-     }
+
+    async function logOutUserFunction() {
+        try {
+            await logoutUser()
+            setUserInfo(null)
+            setUserMenu(false)
+        }catch(error) {
+            console.log(error)
+        }
+        router.refresh()
+    }
+
     useEffect(()=>{
         async function getUserConfirmation() {
+
           const { data: {user} } = await supabase.auth.getUser()
-          if(user) {
+
+          if(user) { 
+
             const finalInfo = await getUserInfo(user.id)
+            console.log(finalInfo)
             setUserInfo(finalInfo)
           }else {
             setUserInfo(null)
           }
         }
         getUserConfirmation()
+
+        console.log('hola')
+
     },[])
     
     return (
@@ -54,7 +63,7 @@ export default function Header() {
             {userInfo ? 
             <>
               <div className="relative">
-                <Image src={nonUser} className="cursor-pointer" width={40} height={40} alt="noprofilepic" onClick={()=> setUserMenu(el => !el)}/>
+                <Image src={userInfo.imgProfile ? userInfo.imgProfile : nonUser} className="cursor-pointer rounded-2xl" width={45} height={45} alt="noprofilepic" onClick={()=> setUserMenu(el => !el)}/>
 
                 <div className={`absolute w-80 bg-[#f9fafb]/90 backdrop-blur-xs top-20 right-0 p-8 flex gap-2 flex-col rounded-2xl ${userMenu ? 'flex' : 'hidden'}`}>
                     <p>{userInfo.name}</p>

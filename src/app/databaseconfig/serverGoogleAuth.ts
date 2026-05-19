@@ -1,7 +1,8 @@
-import { createClient } from '../databaseconfig/server-component'
+import { createClient } from '../databaseconfig/client-component'
 
 export async function registerGoogle() {
-  const supabase = await createClient()
+
+  const supabase = createClient()
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',

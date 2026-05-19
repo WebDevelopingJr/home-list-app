@@ -10,11 +10,29 @@ import notebook from '../../public/home-img/notebook-icon.svg'
 import targetIcon from '../../public/home-img/target-icon.svg'
 import userIcon from '../../public/home-img/users-icons.svg'
 import lockIcon from '../../public/home-img/lock-icon.svg'
+import { useState, useEffect } from "react";
 
+import { createClient } from './databaseconfig/client-component'
 
 export default function Home() {
 
-  return (
+  const [user, setUser] = useState<any>(null)
+
+  useEffect(() => {
+    async function getUser() {
+      const supabase = createClient()
+
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+
+      setUser(user)
+    }
+
+    getUser()
+  }, [])
+
+  return (  
    <>
       <Header />
       <main className="w-full flex flex-col items-center mt-20"> 

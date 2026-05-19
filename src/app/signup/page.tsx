@@ -6,7 +6,7 @@ import Image from "next/image"
 /* Database functions  */
 import { registerUser } from '../databaseconfig/serverAuth'
 
-import { createClient } from "../databaseconfig/client-component";
+import { registerGoogle } from "../databaseconfig/serverGoogleAuth";
 
 import { addUserdb } from '../databaseconfig/serverDb'
 import googleIcon from '../../../public/login-img/googleLogo.png'
@@ -31,7 +31,6 @@ export default function Signup () {
               if (!authData?.user) {
               throw new Error("We couldnt get the id of the created user")
           }
-  
           // 2. Pasamos el ID de Auth a tu base de datos
           await addUserdb({
               id: authData.user.id, // <-- AQUÍ se hace la magia
@@ -49,16 +48,7 @@ export default function Signup () {
     }
 
     /* Google function register  */
-    async function registerGoogle() {
-      const supabase = createClient()
-      
-      await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: 'http://localhost:3000/auth/callback',
-        },
-      })
-    }
+
     
     return (
         <>
@@ -68,7 +58,7 @@ export default function Signup () {
                 <h1 className="text-4xl text-center">Sign up to Home List</h1>
                 <p className="text-gray-600">Already have an account? <Link href={'/login'} className="font-medium text-black">Log in</Link></p>
                 <div className="bg-[#4d4d4d5b]/30 backdrop-blur-2xl border border-gray-400/30 box-border py-2 px-10 rounded-2xl mt-5 hover:bg-gray-100 transition duration-200">
-                    <button className="flex justify-center items-center gap-3"><Image src={googleIcon} alt="googleIcon" width={30} height={30} onClick={registerGoogle}/> Sign up with Google</button>
+                    <button className="flex justify-center items-center gap-3" onClick={registerGoogle}><Image src={googleIcon} alt="googleIcon" width={30} height={30}/> Sign up with Google</button>
                 </div>
               </div>
 
