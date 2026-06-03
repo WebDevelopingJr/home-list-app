@@ -41,15 +41,12 @@ export default function Header() {
           if(user) { 
 
             const finalInfo = await getUserInfo(user.id)
-            console.log(finalInfo)
             setUserInfo(finalInfo)
           }else {
             setUserInfo(null)
           }
         }
         getUserConfirmation()
-
-        console.log('hola')
 
     },[])
     

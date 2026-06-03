@@ -12,6 +12,7 @@ import userIcon from '../../public/home-img/users-icons.svg'
 import lockIcon from '../../public/home-img/lock-icon.svg'
 import { useState, useEffect } from "react";
 
+
 import { createClient } from './databaseconfig/client-component'
 
 export default function Home() {
@@ -21,7 +22,7 @@ export default function Home() {
   useEffect(() => {
     async function getUser() {
       const supabase = createClient()
-
+ 
       const {
         data: { user },
       } = await supabase.auth.getUser()
@@ -31,7 +32,6 @@ export default function Home() {
 
     getUser()
   }, [])
-
   return (  
    <>
       <Header />
