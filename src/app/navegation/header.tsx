@@ -34,20 +34,24 @@ export default function Header() {
     }
 
 useEffect(() => {
-  async function getUserConfirmation() {
-    try {
-      const { data: { session } } = await supabase.auth.getSession()
-      
-      if (session?.user) {
-        const finalInfo = await getUserInfo(session.user.id)
-        setUserInfo(finalInfo)
-      } else {
-        setUserInfo(null)
-      }
-    } catch (error) {
+async function getUserConfirmation() {
+  try {
+    const { data: { session } } = await supabase.auth.getSession()
+    console.log('Session:', session)
+    
+    if (session?.user) {
+      const finalInfo = await getUserInfo(session.user.id)
+      console.log('Final info:', finalInfo) // ← aquí
+      setUserInfo(finalInfo)
+    } else {
+      console.log('No session found')
       setUserInfo(null)
     }
+  } catch (error) {
+    console.error('Unexpected error:', error)
+    setUserInfo(null)
   }
+}
 
   getUserConfirmation()
 
