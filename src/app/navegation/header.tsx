@@ -35,15 +35,15 @@ export default function Header() {
     useEffect(() => {
       async function getUserConfirmation() {
         try {
-          // ← Cambia getSession() por getUser()
-          const { data, error} = await supabase.auth.getUser()
-          
-         if(data) {
-          const info = data.user
-          console.log(info)
-          console.log(error)
-         }
-        }catch(error) {
+          const { data, error } = await supabase.auth.getUser()
+
+          if (error || !data.user) return
+
+          // Busca el usuario en tu tabla users
+          const info = await getUserInfo(data.user.id)
+          setUserInfo(info)
+
+        } catch (error) {
           console.error(error)
         }
       }
