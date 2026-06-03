@@ -1,4 +1,4 @@
-import { createClient } from '@/app/databaseconfig/server-component'
+import { createClient } from '../../databaseconfig/server-component'
 import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
