@@ -60,12 +60,17 @@ export default function Header() {
         async (event, session) => {
           console.log('Auth event:', event) // ← para debuggear
           
+        try {
           if (session?.user) {
             const finalInfo = await getUserInfo(session.user.id)
+            console.log('finalInfo inside onChange:', finalInfo) // ← y esto
             setUserInfo(finalInfo)
           } else {
             setUserInfo(null)
           }
+        } catch (error) {
+          console.error('Error inside onAuthStateChange:', error) // ← captura el error
+        }
           router.refresh()
         }
       )
