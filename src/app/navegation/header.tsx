@@ -36,46 +36,18 @@ export default function Header() {
       async function getUserConfirmation() {
         try {
           // ← Cambia getSession() por getUser()
-          const { data: { user }, error } = await supabase.auth.getUser()
+          const { data, error} = await supabase.auth.getUser()
           
-          if (user) {
-            const finalInfo = await getUserInfo(user.id)
-            setUserInfo(finalInfo)
-            console.log('finalInfo: ' +finalInfo)
-            console.log('user' +user)
-          } else {
-            setUserInfo(null)
-            console.log('user else '+ user)
-
-          }
-        } catch (error) {
-          console.error('Unexpected error:', error)
-          setUserInfo(null)
+         if(data) {
+          const info = data
+          console.log(data)
+          console.log(error)
+         }
+        }catch(error) {
+          console.error(error)
         }
       }
-
       getUserConfirmation()
-
-      const { data: { subscription } } = supabase.auth.onAuthStateChange(
-        async (event, session) => {
-          console.log('Auth event:', event) // ← para debuggear
-          
-        try {
-          if (session?.user) {
-            const finalInfo = await getUserInfo(session.user.id)
-            console.log('finalInfo inside onChange:', finalInfo) // ← y esto
-            setUserInfo(finalInfo)
-          } else {
-            setUserInfo(null)
-          }
-        } catch (error) {
-          console.error('Error inside onAuthStateChange:', error) // ← captura el error
-        }
-          router.refresh()
-        }
-      )
-
-      return () => subscription.unsubscribe()
     }, [])
 
     return (
