@@ -33,22 +33,29 @@ export default function Header() {
         router.refresh()
     }
 
-    useEffect(()=>{
-        async function getUserConfirmation() {
-
-          const { data: {user} } = await supabase.auth.getUser()
-
-          if(user) { 
-
-            const finalInfo = await getUserInfo(user.id)
-            setUserInfo(finalInfo)
-          }else {
-            setUserInfo(null)
+    useEffect(() => {
+      async function getUserConfirmation() {
+        try {
+          const { data: { user }, error } = await supabase.auth.getUser()
+          
+          if (error) {
+              console.error('Auth error:', error)
+              setUserInfo(null)
+              return  // <-- sale limpiamente sin romper el componente
           }
+          if (user) {
+              const finalInfo = await getUserInfo(user.id)
+              setUserInfo(finalInfo)
+          } else {
+              setUserInfo(null)
+          }
+        } catch (error) {
+          console.error('Unexpected error:', error)
+          setUserInfo(null)  // <-- estado limpio aunque falle
         }
+      }
         getUserConfirmation()
-
-    },[])
+    }, [])
     
     return (
       <div className="w-full flex items-center justify-center mt-5">
