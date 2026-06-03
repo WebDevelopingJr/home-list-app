@@ -36,27 +36,36 @@ export default function Header() {
     useEffect(() => {
       async function getUserConfirmation() {
         try {
-          const { data: { user }, error } = await supabase.auth.getUser()
+          const { data: { session } } = await supabase.auth.getSession()
           
-          if (error) {
-              console.error('Auth error:', error)
-              setUserInfo(null)
-              return  // <-- sale limpiamente sin romper el componente
-          }
-          if (user) {
-              const finalInfo = await getUserInfo(user.id)
-              setUserInfo(finalInfo)
+          if (session?.user) {
+            const finalInfo = await getUserInfo(session.user.id)
+            setUserInfo(finalInfo)
           } else {
-              setUserInfo(null)
+            setUserInfo(null)
           }
         } catch (error) {
           console.error('Unexpected error:', error)
-          setUserInfo(null)  // <-- estado limpio aunque falle
+          setUserInfo(null)
         }
       }
-        getUserConfirmation()
+
+      getUserConfirmation()
+
+      // Escucha cambios de sesión en tiempo real
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(
+        async (event, session) => {
+          if (session?.user) {
+            const finalInfo = await getUserInfo(session.user.id)
+            setUserInfo(finalInfo)
+          } else {
+            setUserInfo(null)
+          }
+        }
+      )
+
+      return () => subscription.unsubscribe() // cleanup
     }, [])
-    
     return (
       <div className="w-full flex items-center justify-center mt-5">
           <div className="w-[90%] max-w-200 flex justify-around items-center py-3 z-10 relative bg-white/30 backdrop-blur-2xl rounded-3xl">
@@ -97,18 +106,3 @@ export default function Header() {
       </div>
     )
 }
-
-/* 
-
-            <div className="flex cursor-pointer relative" onClick={() => setMenuLog(el => !el)}>
-                {menuLog ? 
-                    <Image src={closeMeny} alt="menuIcon" width={35} height={35}/>
-                    :
-                    <Image src={hamMeny} alt="menuIcon" width={45} height={45}/>
-                }
-                <div className={`w-auto bg-[#f9fafb]/60 backdrop-blur-xs flex flex-col items-end absolute z-5 top-20 right-5 transform gap-3 rounded-[10px] overflow-hidden ${menuLog ? 'p-5 h-auto' : 'p-0 h-0'}`}>
-                    <Link className="w-80 h-10 texts-start flex items-cente text-gray-900 font-semibold px-3 rounded-[5px]" href={'/login'} onClick={()=> setMenuLog(false)}>Log in</Link>
-                    <Link className="w-80 h-10 texts-start flex items-center bg-blue-400 text-white font-semibold px-3 rounded-[5px]" href={'/signup'} onClick={()=> setMenuLog(false)}>Sign up</Link>
-                </div>
-            </div>
-            */
