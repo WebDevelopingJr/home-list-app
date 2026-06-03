@@ -40,7 +40,7 @@ export default function Home() {
             <Image src={iconImage} alt="Icon" />
           </div>
           <div className="w-[90%] text-center mt-5 max-w-2xl">
-            <h1 className="text-3xl mb-5 font-semiboldbold ">Home List still</h1>
+            <h1 className="text-3xl mb-5 font-semiboldbold ">Home List</h1>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni delectus rem beatae expedita explicabo culpa a velit hic in. Voluptas natus doloremque, accusantium nemo quam aliquam delectus pariatur harum libero.</p>  
           </div>  
           <div className="w-[90%] max-w-xl flex items-center justify-center flex-row mt-8 gap-6">
