@@ -32,45 +32,43 @@ export default function Header() {
         }
         router.refresh()
     }
-
-useEffect(() => {
-async function getUserConfirmation() {
-  try {
-    const { data: { session } } = await supabase.auth.getSession()
-    console.log('Session:', session)
-    
-    if (session?.user) {
-      const finalInfo = await getUserInfo(session.user.id)
-      console.log('Final info:', finalInfo) // ← aquí
-      setUserInfo(finalInfo)
-    } else {
-      console.log('No session found')
-      setUserInfo(null)
-    }
-  } catch (error) {
-    console.error('Unexpected error:', error)
-    setUserInfo(null)
-  }
-}
-
-  getUserConfirmation()
-
-  const { data: { subscription } } = supabase.auth.onAuthStateChange(
-    async (event, session) => {
-      if (event === 'SIGNED_IN' && session?.user) {
-        const finalInfo = await getUserInfo(session.user.id)
-        setUserInfo(finalInfo)
-        router.refresh() // ← esto fuerza el re-render del header
+    const [loading, setLoading] = useState(true)
+    useEffect(() => {
+      async function getUserConfirmation() {
+        try {
+          // ← Cambia getSession() por getUser()
+          const { data: { user }, error } = await supabase.auth.getUser()
+          
+          if (user) {
+            const finalInfo = await getUserInfo(user.id)
+            setUserInfo(finalInfo)
+          } else {
+            setUserInfo(null)
+          }
+        } catch (error) {
+          console.error('Unexpected error:', error)
+          setUserInfo(null)
+        }
       }
-      if (event === 'SIGNED_OUT') {
-        setUserInfo(null)
-        router.refresh()
-      }
-    }
-  )
 
-  return () => subscription.unsubscribe()
-}, [])
+      getUserConfirmation()
+
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(
+        async (event, session) => {
+          console.log('Auth event:', event) // ← para debuggear
+          if (session?.user) {
+            const finalInfo = await getUserInfo(session.user.id)
+            setUserInfo(finalInfo)
+          } else {
+            setUserInfo(null)
+          }
+          router.refresh()
+        }
+      )
+
+      return () => subscription.unsubscribe()
+    }, [])
+
     return (
       <div className="w-full flex items-center justify-center mt-5">
           <div className="w-[90%] max-w-200 flex justify-around items-center py-3 z-10 relative bg-white/30 backdrop-blur-2xl rounded-3xl">
