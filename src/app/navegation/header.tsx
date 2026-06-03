@@ -42,8 +42,12 @@ export default function Header() {
           if (user) {
             const finalInfo = await getUserInfo(user.id)
             setUserInfo(finalInfo)
+            console.log('finalInfo: ' +finalInfo)
+            console.log('user' +user)
           } else {
             setUserInfo(null)
+            console.log('user else '+ user)
+
           }
         } catch (error) {
           console.error('Unexpected error:', error)
