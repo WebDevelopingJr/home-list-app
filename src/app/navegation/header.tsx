@@ -33,39 +33,40 @@ export default function Header() {
         router.refresh()
     }
 
-    useEffect(() => {
-      async function getUserConfirmation() {
-        try {
-          const { data: { session } } = await supabase.auth.getSession()
-          
-          if (session?.user) {
-            const finalInfo = await getUserInfo(session.user.id)
-            setUserInfo(finalInfo)
-          } else {
-            setUserInfo(null)
-          }
-        } catch (error) {
-          console.error('Unexpected error:', error)
-          setUserInfo(null)
-        }
+useEffect(() => {
+  async function getUserConfirmation() {
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      
+      if (session?.user) {
+        const finalInfo = await getUserInfo(session.user.id)
+        setUserInfo(finalInfo)
+      } else {
+        setUserInfo(null)
       }
+    } catch (error) {
+      setUserInfo(null)
+    }
+  }
 
-      getUserConfirmation()
+  getUserConfirmation()
 
-      // Escucha cambios de sesión en tiempo real
-      const { data: { subscription } } = supabase.auth.onAuthStateChange(
-        async (event, session) => {
-          if (session?.user) {
-            const finalInfo = await getUserInfo(session.user.id)
-            setUserInfo(finalInfo)
-          } else {
-            setUserInfo(null)
-          }
-        }
-      )
+  const { data: { subscription } } = supabase.auth.onAuthStateChange(
+    async (event, session) => {
+      if (event === 'SIGNED_IN' && session?.user) {
+        const finalInfo = await getUserInfo(session.user.id)
+        setUserInfo(finalInfo)
+        router.refresh() // ← esto fuerza el re-render del header
+      }
+      if (event === 'SIGNED_OUT') {
+        setUserInfo(null)
+        router.refresh()
+      }
+    }
+  )
 
-      return () => subscription.unsubscribe() // cleanup
-    }, [])
+  return () => subscription.unsubscribe()
+}, [])
     return (
       <div className="w-full flex items-center justify-center mt-5">
           <div className="w-[90%] max-w-200 flex justify-around items-center py-3 z-10 relative bg-white/30 backdrop-blur-2xl rounded-3xl">
