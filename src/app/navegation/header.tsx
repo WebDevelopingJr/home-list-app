@@ -32,7 +32,6 @@ export default function Header() {
         }
         router.refresh()
     }
-    const [loading, setLoading] = useState(true)
     useEffect(() => {
       async function getUserConfirmation() {
         try {
@@ -60,6 +59,7 @@ export default function Header() {
       const { data: { subscription } } = supabase.auth.onAuthStateChange(
         async (event, session) => {
           console.log('Auth event:', event) // ← para debuggear
+          
           if (session?.user) {
             const finalInfo = await getUserInfo(session.user.id)
             setUserInfo(finalInfo)
