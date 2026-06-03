@@ -2,41 +2,42 @@ import { createClient } from '@/app/databaseconfig/server-component'
 import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
-
   const { searchParams, origin } = new URL(request.url)
-
   const code = searchParams.get('code')
 
   if (code) {
-
     const supabase = await createClient()
 
-    // Crear sesión
-    await supabase.auth.exchangeCodeForSession(code)
+    const { error: sessionError } = await supabase.auth.exchangeCodeForSession(code)
+    
+    if (sessionError) {
+      console.error('❌ Session error:', sessionError.message)
+      return NextResponse.redirect(`${origin}/`)
+    }
 
-    // Obtener usuario autenticado
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
+    
+    console.log('✅ User:', user?.email)
+    console.log('❌ User error:', userError?.message)
 
-    // Si existe usuario
     if (user) {
-
-      // Verificar si ya existe en la tabla users
-      const { data: existingUser } = await supabase
+      const { data: existingUser, error: selectError } = await supabase
         .from('users')
         .select('*')
         .eq('id', user.id)
         .maybeSingle()
 
-      // Si no existe, crearlo
+      console.log('Existing user:', existingUser)
+      console.log('Select error:', selectError?.message)
+
       if (!existingUser) {
-        await supabase.from('users').insert({
+        const { error: insertError } = await supabase.from('users').insert({
           id: user.id,
           email: user.email,
           name: user.user_metadata.full_name,
           imgProfile: user.user_metadata.avatar_url
         })
+        console.log('Insert error:', insertError?.message)
       }
     }
   }
