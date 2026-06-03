@@ -82,7 +82,6 @@ export default function Header() {
                 <div className={`w-auto bg-[#f9fafb]/60 backdrop-blur-xs flex flex-col items-end absolute z-5 top-20 right-5 transform gap-3 rounded-[10px] overflow-hidden ${menuLog ? 'p-5 h-auto' : 'p-0 h-0'}`}>
                     <Link className="w-80 h-10 texts-start flex items-cente text-gray-900 font-semibold px-3 rounded-[5px]" href={'/login'} onClick={()=> setMenuLog(false)}>Log in</Link>
                     <Link className="w-80 h-10 texts-start flex items-center bg-blue-400 text-white font-semibold px-3 rounded-[5px]" href={'/signup'} onClick={()=> setMenuLog(false)}>Sign up</Link>
-                    <button className="mt-2 border border-gray-400 text-center py-2 rounded-xl hover:bg-red-400 hover:text-white" onClick={()=> logOutUserFunction()}>Log out</button>
                 </div>
               </div>
             </>}
