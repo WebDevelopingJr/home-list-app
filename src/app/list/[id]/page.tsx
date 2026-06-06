@@ -877,7 +877,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
               <input
                 type="text"
                 name="brand"
-                className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors bg-gray-500 text-gray-100`}
+                className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors border-gray-300 text-gray-100`}
                 placeholder="Enter brand name"
                 value={proBrand}
                 onChange={(e) => { setProBrand(e.target.value) }}
