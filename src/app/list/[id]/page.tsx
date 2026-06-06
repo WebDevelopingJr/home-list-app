@@ -417,7 +417,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
     <>
     {arrInfo && dataArrList ? 
     <>
-      <div className="w-full flex justify-center items-center mt-5 bg-red-900"> {/* Header */}
+      <div className="w-full flex justify-center items-center mt-5"> {/* Header */}
         <div className="w-[90%] max-w-500 flex flex-col justify-between items-start gap-8 border-b border-gray-400 pb-5 sm:flex-row sm:items-center">
           <div className="flex items-center justify-center gap-5">
             <Link href={'/dashboard'}><div className="size-9 flex items-center justify-center rounded-2xl bg-gray-400/50"><Image src={returnIcon} alt="returnDashboard" /></div></Link> {/* Button */}
