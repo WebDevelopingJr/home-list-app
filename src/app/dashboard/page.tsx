@@ -432,7 +432,7 @@ const createDbData = async () => {
           </div>
         </div>
         {/* Create list */}
-        <div className={`w-full h-screen flex ${activeContainer ? 'flex' : 'hidden'}`}>
+        <div className={`w-full h-screen ${activeContainer ? 'flex' : 'hidden'} fixed`}>
           <div className={`w-[95%] max-w-200 flex flex-col bg-white/20 backdrop-blur-2xl border border-gray-300 rounded-2xl fixed ${activeContainer ? 'top-[50%]' : 'top-0'} left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-10 ${activeContainer ? 'opacity' : 'opacity-0'} transition duration-200`}>
             
             <div className="w-full flex justify-end cursor-pointer" onClick={() => setActiveContainer(false)}>
