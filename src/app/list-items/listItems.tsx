@@ -71,7 +71,9 @@ export function ItemListDevice({ showArrList, arrInfo, setImageOpen, setOpenImag
           <div className="flex flex-col gap-4 flex-1">
             <h1 className="text-lg">{el.name}</h1>
             <div className="flex gap-2">
-              <p className="w-auto text-center py-1 px-4 rounded-lg text-sm bg-gray-500 text-gray-50">{el.brand}</p>
+              {el.brand !== null && (
+                <p className="w-auto text-center py-1 px-4 rounded-lg text-sm bg-gray-500 text-gray-50">{el.brand}</p>
+              )}
               <p className="w-auto text-center py-1 px-4 rounded-lg text-sm bg-gray-500 text-gray-50">{el.type}</p>
               {el.store !== '' && (
                 <p className="w-auto text-center py-1 px-4 rounded-lg text-sm bg-gray-500 text-gray-50">{el.store}</p>

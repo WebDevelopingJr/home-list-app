@@ -80,7 +80,6 @@ export default function ListDetail() {
   /* Errors */
   const [proNameError, setProNameError] = useState<string | null>(null)
   const [proTypeError, setProTypeError] = useState<string | null>(null)
-  const [proBrandError, setProBrandError] = useState<string | null>(null)
   const [proAmountError, setProAmountError] = useState<string | null>(null)
   const [proMaxAmountError, setProMaxAmountError] = useState<string | null>(null)
   const [proAvbError, setProAvbError] = useState<string | null>(null)
@@ -94,12 +93,6 @@ export default function ListDetail() {
   function validateProductType(type: string): string | null {
     if (!type || type.trim().length === 0) return 'Product type cannot be empty'
     if (type.trim().length < 2)            return 'Product type must be at least 2 characters'
-    return null
-  }
-
-  function validateProductBrand(brand: string): string | null {
-    if (!brand || brand.trim().length === 0) return 'Product brand cannot be empty'
-    if (brand.trim().length < 2)             return 'Product brand must be at least 2 characters'
     return null
   }
 
@@ -126,7 +119,6 @@ export default function ListDetail() {
     // ── Validation ──
     const nameError = validateProductName(proName)
     const typeError = validateProductType(proType)
-    const brandError = validateProductBrand(proBrand)
 
     const amountError = validateProductAmount(proAmount)
     const maxAmountError = validateProductMaxAmount(proMaxAmount, proAmount)
@@ -134,12 +126,11 @@ export default function ListDetail() {
 
     setProNameError(nameError)
     setProTypeError(typeError)
-    setProBrandError(brandError)
     setProAmountError(amountError)
     setProMaxAmountError(maxAmountError)
     setProAvbError(avbError)
 
-    if (nameError || typeError || brandError || amountError || maxAmountError || avbError) return
+    if (nameError || typeError || amountError || maxAmountError || avbError) return
 
     const dataList: ListDb = {
       id: crypto.randomUUID(),
@@ -886,13 +877,11 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
               <input
                 type="text"
                 name="brand"
-                className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${proBrandError ? 'border-red-400' : 'border-gray-300'}`}
+                className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors`}
                 placeholder="Enter brand name"
                 value={proBrand}
-                onChange={(e) => { setProBrand(e.target.value); if (proBrandError) setProBrandError(validateProductBrand(e.target.value)) }}
-                onBlur={() => setProBrandError(validateProductBrand(proBrand))}
+                onChange={(e) => { setProBrand(e.target.value) }}
               />
-              {proBrandError && <p className="text-red-500 text-sm flex items-center gap-1"><span>⚠</span> {proBrandError}</p>}
             </div>
 
             {/* ── Purchase Location ── */}
@@ -974,8 +963,8 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
               onClick={() => {
                 setOpenDiv(false)
                 setProNameError(null); setProAmountError(null)
-                setProTypeError(null); setProBrandError(null)
-                setProMaxAmountError(null); setProAvbError(null)
+                setProTypeError(null); setProMaxAmountError(null); 
+                setProAvbError(null)
               }}
             >
               Cancel

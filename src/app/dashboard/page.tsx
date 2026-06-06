@@ -259,7 +259,7 @@ const createDbData = async () => {
               })}
 
               {arrEdit && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm p-6 z-10 overflow-y-scroll">
+                <div className="fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm p-6 z-10 overflow-y-scroll sm:overflow-hidden">
                   <div className="w-full max-w-lg bg-white rounded-3xl shadow-xl border border-zinc-200 p-8">
 
                     <div className="mb-6">
@@ -432,7 +432,7 @@ const createDbData = async () => {
           </div>
         </div>
         {/* Create list */}
-        <div className={`w-full h-screen flex ${activeContainer ? 'pointer-events-auto' : 'pointer-events-none'}`}>
+        <div className={`w-full h-screen flex ${activeContainer ? 'flex' : 'hidden'}`}>
           <div className={`w-[95%] max-w-200 flex flex-col bg-white/20 backdrop-blur-2xl border border-gray-300 rounded-2xl fixed ${activeContainer ? 'top-[50%]' : 'top-0'} left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-10 ${activeContainer ? 'opacity' : 'opacity-0'} transition duration-200`}>
             
             <div className="w-full flex justify-end cursor-pointer" onClick={() => setActiveContainer(false)}>
