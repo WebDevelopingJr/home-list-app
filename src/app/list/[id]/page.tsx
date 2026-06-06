@@ -828,7 +828,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
       </div>
         
         {/* creating screen */}
-      <div className={`fixed inset-0 bg-black/50 ${openDiv ? 'flex' : 'hidden'} items-center justify-center z-5 sm:p-4`}>
+      <div className={`fixed inset-0 bg-black/50 ${openDiv ? 'flex' : 'hidden'} items-center justify-center z-5 sm:p-4 overflow-scroll sm:overflow-hidden`}>
         <div className="w-full max-w-200 bg-white backdrop-blur-2xl shadow-2xl p-8 sm:rounded-2xl absolute top-0 sm:relative sm:top-auto">
           <h1 className="text-2xl font-bold mb-6 text-gray-900">Create Item</h1>
           <div className="space-y-5">
