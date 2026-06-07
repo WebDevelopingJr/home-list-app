@@ -137,7 +137,9 @@ export function ItemListPhone({ showArrList, arrInfo, setImageOpen, setOpenImage
           </div>
 
           <div className="flex gap-2 mt-2 flex-wrap">
-            <p className="py-0.5 px-3 rounded-lg text-xs bg-gray-500 text-gray-50">{el.brand}</p>
+            {el.brand !== '' && (
+              <p className="py-0.5 px-3 rounded-lg text-xs bg-gray-500 text-gray-50">{el.brand}</p>
+            )}
             <p className="py-0.5 px-3 rounded-lg text-xs bg-gray-500 text-gray-50">{el.type}</p>
             {el.store !== '' && (
               <p className="py-0.5 px-3 rounded-lg text-xs bg-gray-500 text-gray-50">{el.store}</p>
