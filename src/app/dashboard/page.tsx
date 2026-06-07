@@ -299,7 +299,7 @@ const createDbData = async () => {
                                 <Image src={userList} alt="user" width={22} />
                                 <p className="text-sm">{person}</p>
                               </div>
-                              {person !== userData.email && (
+                              {person !== userData.email && _ !== 0 && (
                                 <div
                                   className="cursor-pointer"
                                   onClick={() => setArrEdit({ ...arrEdit, people: arrEdit.people.filter((p: string) => p !== person) })}

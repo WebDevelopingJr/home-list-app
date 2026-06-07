@@ -532,6 +532,36 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
     </div>
 
       <div className="flex items-center justify-center mt-10">
+        <div className="w-full flex items-center justify-center">
+          <div className="w-[90%] max-w-7xl flex items-center justify-center">
+            <div className="flex gap-2">
+              <div className={`w-30 h-8 text-sm flex items-center justify-center gap-1 pr-2 bg-green-300 rounded-lg border border-green-400 text-green-600 ${
+                  filtState === ""
+                    ? "bg-gray-700 border-gray-800 text-white shadow-lg scale-105"
+                    : "bg-gray-100 border-gray-300 text-gray-600 hover:bg-gray-200"
+              }`} onClick={()=> { setFiltState(''); filterCategory() }} >All</div>
+
+              <div className={`w-30 h-8 text-sm flex items-center justify-center gap-1 pr-2 bg-green-300 rounded-lg border border-green-400 text-green-600   ${
+                filtState === "Aviable"
+                  ? "bg-green-600 border-green-700 text-white shadow-lg scale-105"
+                  : "bg-green-100 border-green-300 text-green-700 hover:bg-green-200"
+              }`} onClick={()=> { setFiltState('Aviable'); filterCategory() }} >Aviable</div>
+              
+              <div className={`w-30 h-8 text-sm flex items-center justify-center gap-1 pr-2 bg-yellow-300 rounded-lg border border-yellow-400 text-yellow-600  ${
+                filtState === "Low stock"
+                  ? "bg-yellow-500 border-yellow-600 text-white shadow-lg scale-105"
+                  : "bg-yellow-100 border-yellow-300 text-yellow-700 hover:bg-yellow-200"
+              }`} onClick={()=> { setFiltState('Low stock'); filterCategory() }}>Low Stock</div>
+
+              <div className={`w-30 h-8 text-sm flex items-center justify-center gap-1 pr-2 bg-red-300 rounded-lg border border-red-400 text-red-600   ${
+                filtState === "No stock"
+                  ? "bg-red-600 border-red-700 text-white shadow-lg scale-105"
+                  : "bg-red-100 border-red-300 text-red-700 hover:bg-red-200"
+              }`} onClick={()=> { setFiltState('No stock'); filterCategory() }}>No stock</div>
+              
+            </div>
+          </div>
+        </div>
         <div className="w-[90%] max-w-7xl flex flex-col border border-gray-400/60 border-t-0 rounded-2xl overflow-hidden">
           {isMobile ? <ItemListPhone {...itemProps} /> : <ItemListDevice {...itemProps} />}
           {showArrList.length == 0 ? 
@@ -862,7 +892,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
                     <div
                       key={`${el}-${_}`}
                       className={`inline-flex items-center px-4 py-2 text-sm font-medium cursor-pointer ${proType === el ? 'bg-gray-500 text-gray-100' : 'bg-gray-200 text-gray-700'} rounded-full transition duration-200 hover:bg-gray-300`}
-                      onClick={() => setProType(el)}
+                      onClick={() => { setProType(el); if (proTypeError) setProTypeError(validateProductType(el))}}
                     >
                       {el}
                     </div>
