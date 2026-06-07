@@ -531,34 +531,35 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
           
     </div>
 
-      <div className="flex items-center justify-center mt-10">
+      <div className="flex items-center justify-center flex-col gap-8 mt-10">
         <div className="w-full flex items-center justify-center">
-          <div className="w-[90%] max-w-7xl flex items-center justify-center">
-            <div className="flex gap-2">
-              <div className={`w-30 h-8 text-sm flex items-center justify-center gap-1 pr-2 bg-green-300 rounded-lg border border-green-400 text-green-600 ${
-                  filtState === ""
-                    ? "bg-gray-700 border-gray-800 text-white shadow-lg scale-105"
-                    : "bg-gray-100 border-gray-300 text-gray-600 hover:bg-gray-200"
-              }`} onClick={()=> { setFiltState(''); filterCategory() }} >All</div>
+          <div className="w-[90%] max-w-7xl flex items-center justify-start">
+            <div className="flex gap-2 flex-wrap">
+              <div className={`w-30 h-8 text-sm flex items-center justify-center gap-1 pr-2 bg-gray-300/30 rounded-lg border border-gray-400 text-black-600 ${
+                filtState === ''
+                  ? "bg-gray-700 border-gray-800 text-white shadow-lg scale-105"
+                  : "bg-gray-100 border-gray-300 text-gray-600 hover:bg-gray-200"
+              }`} onClick={()=> { setFiltState('') }} >All</div>
 
               <div className={`w-30 h-8 text-sm flex items-center justify-center gap-1 pr-2 bg-green-300 rounded-lg border border-green-400 text-green-600   ${
                 filtState === "Aviable"
                   ? "bg-green-600 border-green-700 text-white shadow-lg scale-105"
                   : "bg-green-100 border-green-300 text-green-700 hover:bg-green-200"
-              }`} onClick={()=> { setFiltState('Aviable'); filterCategory() }} >Aviable</div>
+              }`} onClick={()=> { setFiltState('Aviable') }} >Aviable</div>
               
               <div className={`w-30 h-8 text-sm flex items-center justify-center gap-1 pr-2 bg-yellow-300 rounded-lg border border-yellow-400 text-yellow-600  ${
                 filtState === "Low stock"
                   ? "bg-yellow-500 border-yellow-600 text-white shadow-lg scale-105"
                   : "bg-yellow-100 border-yellow-300 text-yellow-700 hover:bg-yellow-200"
-              }`} onClick={()=> { setFiltState('Low stock'); filterCategory() }}>Low Stock</div>
+              }`} onClick={()=> { setFiltState('Low stock') }}>Low Stock</div>
 
               <div className={`w-30 h-8 text-sm flex items-center justify-center gap-1 pr-2 bg-red-300 rounded-lg border border-red-400 text-red-600   ${
                 filtState === "No stock"
                   ? "bg-red-600 border-red-700 text-white shadow-lg scale-105"
                   : "bg-red-100 border-red-300 text-red-700 hover:bg-red-200"
-              }`} onClick={()=> { setFiltState('No stock'); filterCategory() }}>No stock</div>
+              }`} onClick={()=> { setFiltState('No stock') }}>No stock</div>
               
+              <div className="w-30 h-8 text-sm flex items-center justify-center px-4 rounded-lg border border-black/20 bg-black text-white cursor-pointer hover:bg-gray-800 active:scale-95 transition-all" onClick={()=> filterCategory()}>Apply</div>
             </div>
           </div>
         </div>
