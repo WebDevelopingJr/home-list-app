@@ -417,722 +417,482 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
     <>
     {arrInfo && dataArrList ? 
     <>
-      <div className="w-full flex justify-center items-center mt-5"> {/* Header */}
-        <div className="w-[90%] max-w-500 flex flex-col justify-between items-start gap-8 border-b border-gray-400 pb-5 sm:flex-row sm:items-center">
-          <div className="flex items-center justify-center gap-5">
-            <Link href={'/dashboard'}><div className="size-9 flex items-center justify-center rounded-2xl bg-gray-400/50"><Image src={returnIcon} alt="returnDashboard" /></div></Link> {/* Button */}
+      {/* Header */}
+      <div className="w-full flex justify-center items-center mt-8 mb-6">
+        <div className="w-[90%] max-w-500 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-4">
+            <Link href={'/dashboard'}><div className="w-9 h-9 flex items-center justify-center rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors border border-gray-200"><Image src={returnIcon} alt="returnDashboard" /></div></Link>
             <div>
-              <h1 className="text-2xl">{arrInfo.name}</h1>
-              <p className="text-sm">{dataArrList.length} ITEMS</p>
+              <p className="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-0.5">List</p>
+              <h1 className="text-2xl font-semibold text-gray-900 tracking-tight">{arrInfo.name}</h1>
             </div>
           </div>
-          
-          <div className="flex gap-5">
-            <button className="w-25 h-10 bg-black text-white rounded-lg cursor-pointer hover:bg-gray-900 transition duration-100">Share</button>
-            <button className="w-43 h-10 bg-gray-200 text-black border border-gray-400 rounded-lg cursor-pointer hover:bg-gray-900 hover:text-white transition duration-100" onClick={()=> setOpenDiv(true)}>Add a Product</button>
-          </div>
-        </div>
-      </div>
-
-
-      <div className="w-full flex items-center justify-center sticky pt-6 top-0 z-2 backdrop-blur-2xl"> {/* sticky positin items */}
-        <div className="w-[90%] max-w-500 flex items-center justify-end pb-5">
           <div className="flex gap-3">
+            <button className="px-4 h-10 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">Share</button>
+            <button className="px-4 h-10 rounded-xl bg-gray-900 text-white text-sm font-medium hover:bg-gray-700 transition-colors" onClick={()=> setOpenDiv(true)}>+ Add Product</button>
+          </div>
+        </div>
+      </div>
+
+      {/* Sticky search + filter bar */}
+      <div className="w-full flex items-center justify-center sticky top-0 z-10 bg-white/80 backdrop-blur-xl border-b border-gray-100 py-3">
+        <div className="w-[90%] max-w-500 flex items-center justify-between gap-3">
+          <p className="text-sm text-gray-400 hidden sm:block">{dataArrList.length} items</p>
+          <div className="flex gap-2 ml-auto">
             <div className="flex items-center justify-center relative">
-              <Image src={searchIcon} alt="search" className="absolute left-2"/>
-              <input type="text" placeholder="Search" className="w-65 border border-gray-500 pl-10 py-1.5 rounded-2xl sm:w-70" onChange={(e)=> filterItems(e.target.value)} />
+              <Image src={searchIcon} alt="search" className="absolute left-3 w-4 h-4"/>
+              <input type="text" placeholder="Search products..." className="w-56 h-10 border border-gray-200 bg-gray-50 pl-9 pr-4 rounded-xl text-sm outline-none focus:border-gray-400 focus:bg-white transition sm:w-72"
+                onChange={(e)=> filterItems(e.target.value)} />
             </div>
-
-            <button className="flex items-center justify-center gap-2 border border-gray-500 px-5 rounded-2xl hover:bg-gray-200 transition duration-200" onClick={()=> setShowFilterContainer((el) => !el)}><Image src={filterIcon} alt="filter_icon"/> Filter</button>
-          </div>
-        </div>
-    </div>
-
-    <div className={`bg-white/50 backdrop-blur-2xl border border-white/10 rounded-2xl p-6 w-full max-w-2xl fixed z-10 top-1/2 left-1/2 transform -translate-1/2 ${showFilterContainer ? 'block' : 'hidden'} `}>
-
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-2">
-          <Image src={filterIcon} alt="filterIcon" className="w-4 h-4 opacity-70" />
-          <p className="font-medium text-base">Filter</p>
-        </div>
-        <button className="text-sm border border-black/50 rounded-lg px-4 py-2 hover:bg-white/10 transition-colors cursor-pointer"
-        onClick={()=> {
-          setFitlCat('')
-          setFiltState('')
-          setFiltBrand('')
-        }}>
-          Clear everything
-        </button>
-      </div>
-
-      <div className="flex flex-col gap-5">
-        <div>
-          <p className="text-[11px] font-semibold uppercase tracking-widest mb-3">Category</p>
-          <div className="flex flex-wrap gap-2">
-            <div className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-black/50 ${filtCat == ' ' ? 'bg-gray-500 text-white' : ''} text-sm cursor-pointer hover:bg-white/10 transition-colors`} onClick={()=> setFitlCat('')}>All</div>
-            {separateTypes('type').map((el, _) => (
-              <div key={`${el}-${_}`} className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-black/50 ${filtCat == el ? 'bg-gray-500 text-white' : ''} text-sm cursor-pointer hover:bg-white/10 transition-colors"`}  onClick={()=> setFitlCat(el)}>
-                {el}
-              </div>
-            ))}
-          </div>
-        </div>
-          
-        <div className="h-px bg-black/70" />
-          
-        <div>
-          <p className={`text-[11px] font-semibold uppercase tracking-widest mb-3`}>States</p>
-          <div className="flex flex-wrap gap-2">
-            <div className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-black/50 text-sm cursor-pointer hover:bg-white/10 transition-colors`} onClick={()=> setFiltState('')}>All</div>
-            <div className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-black/50 ${filtState == 'Aviable' ? 'bg-gray-500 text-white' : ''} text-sm cursor-pointer transition-colors`} onClick={()=> setFiltState('Aviable')}>Aviable</div>
-            <div className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-black/50 ${filtState == 'Low stock' ? 'bg-gray-500 text-white' : ''} text-sm cursor-pointer hover:bg-white/10 transition-colors`} onClick={()=> setFiltState('Low stock')}>Low stock</div>
-            <div className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-black/50 ${filtState == 'No stock' ? 'bg-gray-500 text-white' : ''} text-sm cursor-pointer hover:bg-white/10 transition-colors`} onClick={()=> setFiltState('No stock')}>No stock</div>
-          </div>
-        </div>
-          
-        <div className="h-px bg-black/70" />
-          
-        <div>
-          <p className="text-[11px] font-semibold uppercase tracking-widest mb-3">Brand</p>
-          <div className="flex flex-wrap gap-2">
-            <div className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-black/50 ${filtBrand == ' ' ? 'bg-gray-500 text-white' : ''} text-sm cursor-pointer hover:bg-white/10 transition-colors`} onClick={()=> setFiltBrand('')}>All</div>
-            {separateTypes('brand').map((el, _) => (
-              <div key={`${el}-${_}`} className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-black/50 ${filtBrand == el ? 'bg-gray-500 text-white' : ''} text-sm cursor-pointer hover:bg-white/10 transition-colors`} onClick={()=> setFiltBrand(el)}>
-                {el}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="h-px bg-black/70" />
-          
-        <div>
-          <p className="text-[11px] font-semibold uppercase tracking-widest mb-3">Store</p>
-          <div className="flex flex-wrap gap-2">
-            <div className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-black/50 ${filtStore == ' ' ? 'bg-gray-500 text-white' : ''} text-sm cursor-pointer hover:bg-white/10 transition-colors`} onClick={()=> setFiltStore('')}>All</div>
-            {separateTypes('store').map((el, _) => (
-              <div key={`${el}-${_}`} className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-black/50 ${filtStore == el ? 'bg-gray-500 text-white' : ''} text-sm cursor-pointer hover:bg-white/10 transition-colors`} onClick={()=> setFiltStore(el)}>
-                {el}
-              </div>
-            ))}
+            <button className="h-10 px-4 flex items-center gap-2 border border-gray-200 bg-white rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+              onClick={()=> setShowFilterContainer((el) => !el)}>
+              <Image src={filterIcon} alt="filter_icon" className="w-4 h-4"/> Filters
+            </button>
           </div>
         </div>
       </div>
-          
-      <div className="flex items-center justify-between mt-6 pt-5 border-t border-black/60">
-        <button className="text-sm border border-black/50 rounded-lg px-5 py-2 transition-colors hover:bg-red-500 hover:text-white cursor-pointer" onClick={()=> setShowFilterContainer(false)}>
-          Close
-        </button>
 
-        <button className="text-sm border border-black/50 rounded-lg px-5 py-2 hover:bg-white/10 transition-colors cursor-pointer" onClick={()=> filterCategory()}>
-          Apply
-        </button>
-      </div>
-          
-    </div>
+      {/* Filter panel */}
+      <div className={`bg-white border border-gray-200 rounded-2xl shadow-xl p-6 w-full max-w-xl fixed z-20 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ${showFilterContainer ? 'block' : 'hidden'}`}>
+        <div className="flex items-center justify-between mb-5">
+          <p className="font-semibold text-gray-900">Filters</p>
+          <button className="text-xs text-gray-400 hover:text-gray-700 transition-colors"
+            onClick={()=> { setFitlCat(''); setFiltState(''); setFiltBrand('') }}>
+            Clear all
+          </button>
+        </div>
 
-      <div className="flex items-center justify-center flex-col gap-8 mt-10">
-        <div className="w-full flex items-center justify-center">
-          <div className="w-[90%] max-w-7xl flex items-center justify-start">
-            <div className="flex gap-2 flex-wrap">
-              <div className={`w-30 h-8 text-sm flex items-center justify-center gap-1 pr-2 bg-gray-300/30 rounded-lg border border-gray-400 text-black-600 cursor-pointer ${
-                filtState === ''
-                  ? "bg-gray-700 border-gray-800 text-white shadow-lg scale-105"
-                  : "bg-gray-100 border-gray-300 text-gray-600 hover:bg-gray-200"
-              }`} onClick={()=> { setFiltState('') }} >All</div>
+        <div className="flex flex-col gap-5">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-2.5">Category</p>
+            <div className="flex flex-wrap gap-2">
+              <div className={`px-3 py-1.5 rounded-lg border text-xs font-medium cursor-pointer transition-colors ${filtCat == '' ? 'bg-gray-900 text-white border-gray-900' : 'bg-white border-gray-200 text-gray-600 hover:border-gray-400'}`} onClick={()=> setFitlCat('')}>All</div>
+              {separateTypes('type').map((el, _) => (
+                <div key={`${el}-${_}`} className={`px-3 py-1.5 rounded-lg border text-xs font-medium cursor-pointer transition-colors ${filtCat == el ? 'bg-gray-900 text-white border-gray-900' : 'bg-white border-gray-200 text-gray-600 hover:border-gray-400'}`} onClick={()=> setFitlCat(el)}>{el}</div>
+              ))}
+            </div>
+          </div>
 
-              <div className={`w-30 h-8 text-sm flex items-center justify-center gap-1 pr-2 bg-green-300 rounded-lg border border-green-400 text-green-600 cursor-pointer   ${
-                filtState === "Aviable"
-                  ? "bg-green-600 border-green-700 text-white shadow-lg scale-105"
-                  : "bg-green-100 border-green-300 text-green-700 hover:bg-green-200"
-              }`} onClick={()=> { setFiltState('Aviable') }} >Aviable</div>
-              
-              <div className={`w-30 h-8 text-sm flex items-center justify-center gap-1 pr-2 bg-yellow-300 rounded-lg border border-yellow-400 text-yellow-600 cursor-pointer  ${
-                filtState === "Low stock"
-                  ? "bg-yellow-500 border-yellow-600 text-white shadow-lg scale-105"
-                  : "bg-yellow-100 border-yellow-300 text-yellow-700 hover:bg-yellow-200"
-              }`} onClick={()=> { setFiltState('Low stock') }}>Low Stock</div>
+          <div className="h-px bg-gray-100" />
 
-              <div className={`w-30 h-8 text-sm flex items-center justify-center gap-1 pr-2 bg-red-300 rounded-lg border border-red-400 text-red-600 cursor-pointer   ${
-                filtState === "No stock"
-                  ? "bg-red-600 border-red-700 text-white shadow-lg scale-105"
-                  : "bg-red-100 border-red-300 text-red-700 hover:bg-red-200"
-              }`} onClick={()=> { setFiltState('No stock') }}>No stock</div>
-              
-              <div className="w-30 h-8 text-sm flex items-center justify-center px-4 rounded-lg border border-black/20 bg-black text-white cursor-pointer hover:bg-gray-800 active:scale-95 transition-all" onClick={()=> filterCategory()}>Apply</div>
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-2.5">Status</p>
+            <div className="flex flex-wrap gap-2">
+              <div className={`px-3 py-1.5 rounded-lg border text-xs font-medium cursor-pointer transition-colors ${filtState == '' ? 'bg-gray-900 text-white border-gray-900' : 'bg-white border-gray-200 text-gray-600 hover:border-gray-400'}`} onClick={()=> setFiltState('')}>All</div>
+              <div className={`px-3 py-1.5 rounded-lg border text-xs font-medium cursor-pointer transition-colors ${filtState == 'Aviable' ? 'bg-green-600 text-white border-green-600' : 'bg-green-50 border-green-200 text-green-700 hover:border-green-400'}`} onClick={()=> setFiltState('Aviable')}>Available</div>
+              <div className={`px-3 py-1.5 rounded-lg border text-xs font-medium cursor-pointer transition-colors ${filtState == 'Low stock' ? 'bg-yellow-500 text-white border-yellow-500' : 'bg-yellow-50 border-yellow-200 text-yellow-700 hover:border-yellow-400'}`} onClick={()=> setFiltState('Low stock')}>Low stock</div>
+              <div className={`px-3 py-1.5 rounded-lg border text-xs font-medium cursor-pointer transition-colors ${filtState == 'No stock' ? 'bg-red-600 text-white border-red-600' : 'bg-red-50 border-red-200 text-red-700 hover:border-red-400'}`} onClick={()=> setFiltState('No stock')}>No stock</div>
+            </div>
+          </div>
+
+          <div className="h-px bg-gray-100" />
+
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-2.5">Brand</p>
+            <div className="flex flex-wrap gap-2">
+              <div className={`px-3 py-1.5 rounded-lg border text-xs font-medium cursor-pointer transition-colors ${filtBrand == '' ? 'bg-gray-900 text-white border-gray-900' : 'bg-white border-gray-200 text-gray-600 hover:border-gray-400'}`} onClick={()=> setFiltBrand('')}>All</div>
+              {separateTypes('brand').map((el, _) => (
+                <div key={`${el}-${_}`} className={`px-3 py-1.5 rounded-lg border text-xs font-medium cursor-pointer transition-colors ${filtBrand == el ? 'bg-gray-900 text-white border-gray-900' : 'bg-white border-gray-200 text-gray-600 hover:border-gray-400'}`} onClick={()=> setFiltBrand(el)}>{el}</div>
+              ))}
+            </div>
+          </div>
+
+          <div className="h-px bg-gray-100" />
+
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-2.5">Store</p>
+            <div className="flex flex-wrap gap-2">
+              <div className={`px-3 py-1.5 rounded-lg border text-xs font-medium cursor-pointer transition-colors ${filtStore == '' ? 'bg-gray-900 text-white border-gray-900' : 'bg-white border-gray-200 text-gray-600 hover:border-gray-400'}`} onClick={()=> setFiltStore('')}>All</div>
+              {separateTypes('store').map((el, _) => (
+                <div key={`${el}-${_}`} className={`px-3 py-1.5 rounded-lg border text-xs font-medium cursor-pointer transition-colors ${filtStore == el ? 'bg-gray-900 text-white border-gray-900' : 'bg-white border-gray-200 text-gray-600 hover:border-gray-400'}`} onClick={()=> setFiltStore(el)}>{el}</div>
+              ))}
             </div>
           </div>
         </div>
-        <div className="w-[90%] max-w-7xl flex flex-col border border-gray-400/60 border-t-0 rounded-2xl overflow-hidden">
+
+        <div className="flex justify-between gap-3 mt-6 pt-5 border-t border-gray-100">
+          <button className="px-5 h-10 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+            onClick={()=> setShowFilterContainer(false)}>Close</button>
+          <button className="px-5 h-10 rounded-xl bg-gray-900 text-white text-sm font-medium hover:bg-gray-700 transition-colors"
+            onClick={()=> filterCategory()}>Apply filters</button>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-center flex-col gap-6 mt-6">
+        {/* Quick status filter chips */}
+        <div className="w-[90%] max-w-7xl flex items-center justify-between">
+          <div className="flex gap-2 flex-wrap">
+            <div className={`h-8 px-4 text-xs font-medium flex items-center rounded-lg border cursor-pointer transition-all ${filtState === '' ? 'bg-gray-900 border-gray-900 text-white' : 'bg-white border-gray-200 text-gray-600 hover:border-gray-400'}`}
+              onClick={()=> { setFiltState('') }}>All</div>
+            <div className={`h-8 px-4 text-xs font-medium flex items-center rounded-lg border cursor-pointer transition-all ${filtState === 'Aviable' ? 'bg-green-600 border-green-600 text-white' : 'bg-green-50 border-green-200 text-green-700 hover:border-green-400'}`}
+              onClick={()=> { setFiltState('Aviable') }}>Available</div>
+            <div className={`h-8 px-4 text-xs font-medium flex items-center rounded-lg border cursor-pointer transition-all ${filtState === 'Low stock' ? 'bg-yellow-500 border-yellow-500 text-white' : 'bg-yellow-50 border-yellow-200 text-yellow-700 hover:border-yellow-400'}`}
+              onClick={()=> { setFiltState('Low stock') }}>Low stock</div>
+            <div className={`h-8 px-4 text-xs font-medium flex items-center rounded-lg border cursor-pointer transition-all ${filtState === 'No stock' ? 'bg-red-600 border-red-600 text-white' : 'bg-red-50 border-red-200 text-red-700 hover:border-red-400'}`}
+              onClick={()=> { setFiltState('No stock') }}>No stock</div>
+          </div>
+          <button className="h-8 px-4 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 transition-colors hidden sm:block"
+            onClick={()=> filterCategory()}>Apply</button>
+        </div>
+
+        {/* Items table */}
+        <div className="w-[90%] max-w-7xl rounded-2xl border border-gray-200 overflow-hidden bg-white shadow-sm">
           {isMobile ? <ItemListPhone {...itemProps} /> : <ItemListDevice {...itemProps} />}
-          {showArrList.length == 0 ? 
-          <>
+          {showArrList.length == 0 &&
             <div className="w-full flex flex-col items-center justify-center py-20 px-6">
-              <div className="flex flex-col items-center gap-6">
-                <div className="w-20 h-20 rounded-full bg-linear-to-br from-blue-100 to-blue-50 flex items-center justify-center">
-                  <svg className="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
-                  </svg>
-                </div>
-                <div className="text-center space-y-2">
-                  <h2 className="text-2xl font-semibold text-gray-900">Create your first item</h2>
-                  <p className="text-gray-500 max-w-sm">Start building your inventory. Click "Add a Product" above to create your first item and manage it effortlessly.</p>
-                </div>
+              <div className="w-14 h-14 rounded-2xl bg-gray-50 border border-gray-200 flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
+                </svg>
               </div>
+              <h2 className="text-base font-semibold text-gray-900">No items yet</h2>
+              <p className="text-sm text-gray-400 mt-1 text-center max-w-xs">Click "Add Product" to start building your inventory.</p>
             </div>
-          </>
-          :
-          <>
-          </>
           }
         </div>
-        {showEditPanel[0] && itemToEdit? 
-        
-          <div className="fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm p-6 z-10 overflow-scroll sm:overflow-hidden">
-            <div className="w-full max-w-3xl bg-white shadow-xl border border-zinc-200 p-8 absolute top-0 sm:relative sm:top-auto sm:rounded-3xl">
 
-              {/* Header */}
-              <div className="mb-8">
-                <h1 className="text-3xl font-semibold text-zinc-900">
-                  Edit Item
-                </h1>
-                <p className="text-zinc-500 mt-1">
-                  Update your inventory information.
-                </p>
+        {/* Edit panel */}
+        {showEditPanel[0] && itemToEdit &&
+          <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm p-6 z-10 overflow-scroll sm:overflow-hidden">
+            <div className="w-full max-w-2xl bg-white shadow-2xl border border-gray-200 p-8 absolute top-0 sm:relative sm:top-auto sm:rounded-2xl">
+
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h1 className="text-xl font-semibold text-gray-900">Edit Item</h1>
+                  <p className="text-sm text-gray-400 mt-0.5">Update inventory information.</p>
+                </div>
+                <button className="w-9 h-9 flex items-center justify-center rounded-xl border border-gray-200 hover:bg-gray-100 transition-colors"
+                  onClick={()=> { setItemToEdit(null); setShowEditPanel([false, null]); setMoreEditInfo(false) }}>
+                  <Image src={closeIcon} alt="close" />
+                </button>
               </div>
 
-              {/* Form */}
-              <div className="space-y-6">
-
-              { moreEditInfo ? 
-              <>
-              <div>
-                  <label className="block text-sm font-medium text-zinc-700 mb-2">
-                    Product Name
-                  </label>
-                  <input
-                    type="text"
-                    value={itemToEdit.name}
-                    className="w-full h-12 px-4 rounded-2xl bg-zinc-100 focus:bg-white border border-transparent focus:border-blue-400 outline-none transition"
-                    onChange={(e) =>
-                      setItemToEdit({
-                        ...itemToEdit,
-                        name: e.target.value
-                      })
-                    }
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-5">
+                {moreEditInfo &&
+                <>
                   <div>
-                    <label className="block text-sm font-medium text-zinc-700 mb-2">
-                      Product Type
-                    </label>
-                    <input
-                      type="text"
-                      value={itemToEdit.type}
-                      className="w-full h-12 px-4 rounded-2xl bg-zinc-100 focus:bg-white border border-transparent focus:border-blue-400 outline-none transition"
-                      onChange={(e) =>
-                      setItemToEdit({
-                        ...itemToEdit,
-                        type: e.target.value
-                      })
-                    }
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Product Name</label>
+                    <input type="text" value={itemToEdit.name} className="w-full h-11 px-4 rounded-xl bg-gray-50 border border-gray-200 focus:border-gray-400 focus:bg-white outline-none transition text-sm"
+                      onChange={(e) => setItemToEdit({ ...itemToEdit, name: e.target.value })}
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-zinc-700 mb-2">
-                      Product Brand
-                    </label>
-                    <input
-                      type="text"
-                      value={itemToEdit.brand || ""}
-                      className="w-full h-12 px-4 rounded-2xl bg-zinc-100 focus:bg-white border border-transparent focus:border-blue-400 outline-none transition"
-                      onChange={(e) =>
-                      setItemToEdit({
-                        ...itemToEdit,
-                        brand: e.target.value
-                      })
-                    }
-                    />
-                  </div>
-                </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-zinc-700 mb-2">
-                      Purchase Location
-                    </label>
-                    <input
-                      type="text"
-                      value={itemToEdit.store || ""}
-                      className="w-full h-12 px-4 rounded-2xl bg-zinc-100 focus:bg-white border border-transparent focus:border-blue-400 outline-none transition"
-                      onChange={(e) =>
-                      setItemToEdit({
-                        ...itemToEdit,
-                        store: e.target.value
-                      })
-                    }
-                    />
-                  </div>
-                {itemToEdit.image && (
-                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-zinc-50 border border-zinc-200">
-                    <img
-                      src={`https://ylduecmgivurnnlcskus.supabase.co/storage/v1/object/public/listItems/${arrInfo.id}/${itemToEdit.image}`}
-                      className={`w-16 h-16 rounded-xl object-cover transition ${deletingImage ? 'opacity-40' : ''}`}
-                      alt="product"
-                    />
-                    <div className="flex flex-col gap-1">
-                      <p className="text-sm font-medium text-zinc-700">Current image</p>
-                      {deletingImage ? (
-                        <div className="flex items-center gap-2">
-                          <svg className="animate-spin w-4 h-4 text-red-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
-                          </svg>
-                          <p className="text-sm text-red-400">Deleting picture...</p>
-                        </div>
-                      ) : (
-                        <div className="flex items-center gap-3">
-                          <label className="text-sm text-blue-500 cursor-pointer hover:text-blue-600">
-                            Replace image
-                            <input
-                              type="file"
-                              accept="image/png, image/jpeg, image/webp"
-                              className="hidden"
-                              onChange={(e) => {
-                                const file = e.target.files?.[0]
-                                if (file) replaceImage(file, itemToEdit)
-                              }}
-                            />
-                          </label>
-                          <div className="cursor-pointer" onClick={() => deleteImage(itemToEdit)}>
-                            <Image src={deleteList} alt="deleteImage" width={18} />
-                          </div>
-                        </div>
-                      )}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Type</label>
+                      <input type="text" value={itemToEdit.type} className="w-full h-11 px-4 rounded-xl bg-gray-50 border border-gray-200 focus:border-gray-400 focus:bg-white outline-none transition text-sm"
+                        onChange={(e) => setItemToEdit({ ...itemToEdit, type: e.target.value })}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Brand</label>
+                      <input type="text" value={itemToEdit.brand || ""} className="w-full h-11 px-4 rounded-xl bg-gray-50 border border-gray-200 focus:border-gray-400 focus:bg-white outline-none transition text-sm"
+                        onChange={(e) => setItemToEdit({ ...itemToEdit, brand: e.target.value })}
+                      />
                     </div>
                   </div>
-                )}
-              </> 
-              : 
-              <></>}
 
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Purchase Location</label>
+                    <input type="text" value={itemToEdit.store || ""} className="w-full h-11 px-4 rounded-xl bg-gray-50 border border-gray-200 focus:border-gray-400 focus:bg-white outline-none transition text-sm"
+                      onChange={(e) => setItemToEdit({ ...itemToEdit, store: e.target.value })}
+                    />
+                  </div>
 
-                {/* Quantity + Capacity */}
+                  {itemToEdit.image && (
+                    <div className="flex items-center gap-4 p-4 rounded-xl bg-gray-50 border border-gray-200">
+                      <img src={`https://ylduecmgivurnnlcskus.supabase.co/storage/v1/object/public/listItems/${arrInfo.id}/${itemToEdit.image}`}
+                        className={`w-14 h-14 rounded-xl object-cover transition ${deletingImage ? 'opacity-40' : ''}`} alt="product" />
+                      <div className="flex flex-col gap-1.5">
+                        <p className="text-sm font-medium text-gray-700">Current image</p>
+                        {deletingImage ? (
+                          <div className="flex items-center gap-2">
+                            <svg className="animate-spin w-4 h-4 text-red-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                            </svg>
+                            <p className="text-xs text-red-400">Deleting...</p>
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-3">
+                            <label className="text-xs text-blue-500 cursor-pointer hover:text-blue-600 font-medium">
+                              Replace
+                              <input type="file" accept="image/png, image/jpeg, image/webp" className="hidden"
+                                onChange={(e) => { const file = e.target.files?.[0]; if (file) replaceImage(file, itemToEdit) }}
+                              />
+                            </label>
+                            <span className="text-gray-300">·</span>
+                            <button className="text-xs text-red-500 hover:text-red-600 font-medium" onClick={() => deleteImage(itemToEdit)}>Delete</button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </>}
+
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-zinc-700 mb-2">
-                      Quantity
-                    </label>
-                    <input
-                      type="number"
-                      value={itemToEdit.amount}
-                      className="w-full h-12 px-4 rounded-2xl bg-zinc-100 focus:bg-white border border-transparent focus:border-blue-400 outline-none transition"
-                      onChange={(e) =>
-                      setItemToEdit({
-                        ...itemToEdit,
-                        amount: Number(e.target.value)
-                      })
-                    }
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
+                    <input type="number" value={itemToEdit.amount} className="w-full h-11 px-4 rounded-xl bg-gray-50 border border-gray-200 focus:border-gray-400 focus:bg-white outline-none transition text-sm"
+                      onChange={(e) => setItemToEdit({ ...itemToEdit, amount: Number(e.target.value) })}
                     />
                   </div>
-
                   <div>
-                    <label className="block text-sm font-medium text-zinc-700 mb-2">
-                      Capacity
-                    </label>
-                    <input
-                      type="number"
-                      value={itemToEdit.maxAmount}
-                      className="w-full h-12 px-4 rounded-2xl bg-zinc-100 focus:bg-white border border-transparent focus:border-blue-400 outline-none transition"
-                      onChange={(e) =>
-                      setItemToEdit({
-                        ...itemToEdit,
-                        maxAmount: Number(e.target.value)
-                      })
-                    }
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Capacity</label>
+                    <input type="number" value={itemToEdit.maxAmount} className="w-full h-11 px-4 rounded-xl bg-gray-50 border border-gray-200 focus:border-gray-400 focus:bg-white outline-none transition text-sm"
+                      onChange={(e) => setItemToEdit({ ...itemToEdit, maxAmount: Number(e.target.value) })}
                     />
                   </div>
                 </div>
 
-                {/* Status */}
                 <div>
-                  <p className="text-sm font-medium text-zinc-700 mb-3">
-                    Stock Status
-                  </p>
-
-                  <div className="grid grid-cols-3 gap-4">
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setProAvb("Aviable")
-                        setItemToEdit({
-                            ...itemToEdit,
-                            avb: 'Aviable'
-                          })
-                      }}
-                      className={`h-24 rounded-2xl border transition-all flex flex-col items-center justify-center gap-2 ${itemToEdit.avb == 'Aviable' ? 'bg-green-200 border-green-300 hover:bg-green-100' : 'bg-zinc-50 border-zinc-200 hover:bg-zinc-100'}`}
+                  <p className="text-sm font-medium text-gray-700 mb-3">Stock Status</p>
+                  <div className="grid grid-cols-3 gap-3">
+                    <button type="button"
+                      onClick={() => { setProAvb("Aviable"); setItemToEdit({ ...itemToEdit, avb: 'Aviable' }) }}
+                      className={`h-20 rounded-xl border transition-all flex flex-col items-center justify-center gap-2 text-sm font-medium ${itemToEdit.avb == 'Aviable' ? 'bg-green-50 border-green-300 text-green-700' : 'bg-gray-50 border-gray-200 text-gray-500 hover:bg-gray-100'}`}
                     >
-                      <Image src={highItem} alt="" width={28} />
-                      <span className="text-sm font-medium">
-                        Available
-                      </span>
+                      <Image src={highItem} alt="" width={24} />Available
                     </button>
-                      
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setProAvb("Low stock")
-                        setItemToEdit({
-                            ...itemToEdit,
-                            avb: 'Low stock'
-                          })
-                      }}
-                      className={`h-24 rounded-2xl border transition-all flex flex-col items-center justify-center gap-2 ${itemToEdit.avb == 'Low stock' ? 'bg-yellow-200 border-yellow-300 hover:bg-yellow-100' : 'bg-zinc-50 border-zinc-200 hover:bg-zinc-100'} `}
+                    <button type="button"
+                      onClick={() => { setProAvb("Low stock"); setItemToEdit({ ...itemToEdit, avb: 'Low stock' }) }}
+                      className={`h-20 rounded-xl border transition-all flex flex-col items-center justify-center gap-2 text-sm font-medium ${itemToEdit.avb == 'Low stock' ? 'bg-yellow-50 border-yellow-300 text-yellow-700' : 'bg-gray-50 border-gray-200 text-gray-500 hover:bg-gray-100'}`}
                     >
-                      <Image src={lowItem} alt="" width={28} />
-                      <span className="text-sm font-medium">
-                        Low Stock
-                      </span>
+                      <Image src={lowItem} alt="" width={24} />Low Stock
                     </button>
-                      
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setProAvb("No stock")
-                        setItemToEdit({
-                            ...itemToEdit,
-                            avb: 'No stock'
-                          })
-                      }}
-                      className={`h-24 rounded-2xl border transition-all flex flex-col items-center justify-center gap-2 ${itemToEdit.avb == 'No stock' ? 'bg-red-200 border-red-300 hover:bg-red-100' : 'bg-zinc-50 border-zinc-200 hover:bg-zinc-100'}`}
+                    <button type="button"
+                      onClick={() => { setProAvb("No stock"); setItemToEdit({ ...itemToEdit, avb: 'No stock' }) }}
+                      className={`h-20 rounded-xl border transition-all flex flex-col items-center justify-center gap-2 text-sm font-medium ${itemToEdit.avb == 'No stock' ? 'bg-red-50 border-red-300 text-red-700' : 'bg-gray-50 border-gray-200 text-gray-500 hover:bg-gray-100'}`}
                     >
-                      <Image src={noStockItem} alt="" width={28} />
-                      <span className="text-sm font-medium">
-                        No Stock
-                      </span>
+                      <Image src={noStockItem} alt="" width={24} />No Stock
                     </button>
-                      
                   </div>
                 </div>
-                      
-                {/* Footer */}
-                <div className="flex justify-between gap-5 pt-4 border-t border-zinc-200 flex-col sm:flex-row sm:gap-3">
-                  <div>
-                    <button className="px-5 h-11 rounded-xl bg-zinc-100 hover:bg-zinc-200 transition" onClick={()=> setMoreEditInfo((el) => !el)}>{moreEditInfo ? 'Less edit info' : 'More edit info'}</button>
-                  </div>
+
+                <div className="flex justify-between gap-3 pt-5 border-t border-gray-100 flex-col sm:flex-row">
+                  <button className="px-4 h-10 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+                    onClick={()=> setMoreEditInfo((el) => !el)}>{moreEditInfo ? 'Less details' : 'More details'}</button>
                   <div className="flex gap-2">
-                    <button className="px-5 h-11 rounded-xl bg-zinc-100 hover:bg-zinc-200 transition"
-                    onClick={()=> {
-                      setItemToEdit(null) 
-                      setShowEditPanel([false, null])
-                      setMoreEditInfo(false)
-                    }}
-                    >
-                    Cancel
-                  </button>
-                      
-                  <button className="px-5 h-11 rounded-xl bg-black text-white hover:bg-zinc-800 transition" onClick={()=> editItemList(itemToEdit.id)}>
-                    Save Changes
-                  </button>
+                    <button className="px-5 h-10 rounded-xl border border-gray-200 text-sm font-medium hover:bg-gray-50 transition-colors"
+                      onClick={()=> { setItemToEdit(null); setShowEditPanel([false, null]); setMoreEditInfo(false) }}>Cancel</button>
+                    <button className="px-5 h-10 rounded-xl bg-gray-900 text-white text-sm font-medium hover:bg-gray-700 transition-colors"
+                      onClick={()=> editItemList(itemToEdit.id)}>Save Changes</button>
                   </div>
                 </div>
-                      
               </div>
             </div>
           </div>
-          : 
-          <div>
-          
-          </div>}
+        }
       </div>
-        
-        {/* creating screen */}
-      <div className={`fixed inset-0 bg-black/50 ${openDiv ? 'flex' : 'hidden'} items-center justify-center z-5 sm:p-4 overflow-scroll sm:overflow-hidden`}>
-        <div className="w-full max-w-200 bg-white backdrop-blur-2xl shadow-2xl p-8 sm:rounded-2xl absolute top-0 sm:relative sm:top-auto">
-          <h1 className="text-2xl font-bold mb-6 text-gray-900">Create Item</h1>
-          <div className="space-y-5">
 
-            {/* ── Product Name ── */}
-            <div className="flex flex-col gap-2">
-              <span className="text-sm font-semibold text-gray-700">Product Name</span>
-              <input
-                type="text"
-                name="name"
-                className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${proNameError ? 'border-red-400' : 'border-gray-300'}`}
-                placeholder="e.g. Olive oil 500ml"
-                value={proName}
+      {/* Create Item modal */}
+      <div className={`fixed inset-0 bg-black/30 backdrop-blur-sm ${openDiv ? 'flex' : 'hidden'} items-center justify-center z-10 sm:p-4 overflow-scroll sm:overflow-hidden`}>
+        <div className="w-full max-w-xl bg-white shadow-2xl border border-gray-200 p-8 sm:rounded-2xl absolute top-0 sm:relative sm:top-auto">
+
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h1 className="text-xl font-semibold text-gray-900">Add Product</h1>
+              <p className="text-sm text-gray-400 mt-0.5">Fill in the details below.</p>
+            </div>
+            <button className="w-9 h-9 flex items-center justify-center rounded-xl border border-gray-200 hover:bg-gray-100 transition-colors"
+              onClick={() => { setOpenDiv(false); setProNameError(null); setProAmountError(null); setProTypeError(null); setProMaxAmountError(null); setProAvbError(null) }}>
+              <Image src={closeIcon} alt="close" />
+            </button>
+          </div>
+
+          <div className="space-y-4">
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Product Name</label>
+              <input type="text" name="name" className={`w-full h-11 px-4 rounded-xl bg-gray-50 border outline-none transition text-sm ${proNameError ? 'border-red-400 focus:border-red-400' : 'border-gray-200 focus:border-gray-400 focus:bg-white'}`}
+                placeholder="e.g. Olive oil 500ml" value={proName}
                 onChange={(e) => { setProName(e.target.value); if (proNameError) setProNameError(validateProductName(e.target.value)) }}
                 onBlur={() => setProNameError(validateProductName(proName))}
               />
-              {proNameError && <p className="text-red-500 text-sm flex items-center gap-1"><span>⚠</span> {proNameError}</p>}
+              {proNameError && <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1"><span>⚠</span> {proNameError}</p>}
             </div>
 
-            {/* ── Product Type ── */}
-            <div className="flex flex-col gap-2">
-              <span className="text-sm font-semibold text-gray-700">Product Type</span>
-              <input
-                type="text"
-                name="type-item"
-                className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${proTypeError ? 'border-red-400' : 'border-gray-300'}`}
-                placeholder="e.g Food"
-                value={proType}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Product Type</label>
+              <input type="text" name="type-item" className={`w-full h-11 px-4 rounded-xl bg-gray-50 border outline-none transition text-sm ${proTypeError ? 'border-red-400 focus:border-red-400' : 'border-gray-200 focus:border-gray-400 focus:bg-white'}`}
+                placeholder="e.g. Food" value={proType}
                 onChange={(e) => { setProType(e.target.value); if (proTypeError) setProTypeError(validateProductType(e.target.value)) }}
                 onBlur={() => setProTypeError(validateProductType(proType))}
               />
-              {proTypeError && <p className="text-red-500 text-sm flex items-center gap-1"><span>⚠</span> {proTypeError}</p>}
+              {proTypeError && <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1"><span>⚠</span> {proTypeError}</p>}
             </div>
 
             {separateTypes('type').length > 0 && (
               <div>
-                <p>Available types</p>
-                <div className="flex gap-4 mt-2 flex-wrap">
+                <p className="text-xs text-gray-400 mb-2">Existing types</p>
+                <div className="flex gap-2 flex-wrap">
                   {separateTypes('type').map((el, _) => (
-                    <div
-                      key={`${el}-${_}`}
-                      className={`inline-flex items-center px-4 py-2 text-sm font-medium cursor-pointer ${proType === el ? 'bg-gray-500 text-gray-100' : 'bg-gray-200 text-gray-700'} rounded-full transition duration-200 hover:bg-gray-300`}
-                      onClick={() => { setProType(el); if (proTypeError) setProTypeError(validateProductType(el))}}
-                    >
-                      {el}
-                    </div>
+                    <div key={`${el}-${_}`} className={`px-3 py-1.5 rounded-lg border text-xs font-medium cursor-pointer transition-colors ${proType === el ? 'bg-gray-900 text-white border-gray-900' : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-gray-400'}`}
+                      onClick={() => { setProType(el); if (proTypeError) setProTypeError(validateProductType(el)) }}>{el}</div>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* ── Product Brand ── */}
-            <div className="flex flex-col gap-2">
-              <span className="text-sm font-semibold text-gray-700">Product Brand</span>
-              <input
-                type="text"
-                name="brand"
-                className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors border-gray-300 text-gray-700`}
-                placeholder="Enter brand name"
-                value={proBrand}
-                onChange={(e) => { setProBrand(e.target.value) }}
-              />
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Brand <span className="text-gray-400 font-normal">(optional)</span></label>
+                <input type="text" name="brand" className="w-full h-11 px-4 rounded-xl bg-gray-50 border border-gray-200 focus:border-gray-400 focus:bg-white outline-none transition text-sm"
+                  placeholder="e.g. Kirkland" value={proBrand}
+                  onChange={(e) => { setProBrand(e.target.value) }}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Store <span className="text-gray-400 font-normal">(optional)</span></label>
+                <input type="text" name="store" className="w-full h-11 px-4 rounded-xl bg-gray-50 border border-gray-200 focus:border-gray-400 focus:bg-white outline-none transition text-sm"
+                  placeholder="e.g. Costco" value={proStore}
+                  onChange={(e) => setProStore(e.target.value)}
+                />
+              </div>
             </div>
 
-            {/* ── Purchase Location ── */}
-            <div className="flex flex-col gap-2">
-              <span className="text-sm font-semibold text-gray-700">Purchase Location</span>
-              <input
-                type="text"
-                name="store"
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Enter Purchase Location (Optional)"
-                value={proStore}
-                onChange={(e) => setProStore(e.target.value)}
-              />
-            </div>
-
-            {/* ── Quantity & Capacity ── */}
-            <div className="flex gap-4">
-              <div className="flex flex-col gap-2 flex-1">
-                <span className="text-sm font-semibold text-gray-700">Product Quantity</span>
-                <input
-                  type="number"
-                  name="amount"
-                  className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${proAmountError ? 'border-red-400' : 'border-gray-300'}`}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
+                <input type="number" name="amount" className={`w-full h-11 px-4 rounded-xl bg-gray-50 border outline-none transition text-sm ${proAmountError ? 'border-red-400 focus:border-red-400' : 'border-gray-200 focus:border-gray-400 focus:bg-white'}`}
                   placeholder="0"
                   onChange={(e) => { setProAmount(Number(e.target.value)); if (proAmountError) setProAmountError(validateProductAmount(Number(e.target.value))) }}
                   onBlur={() => setProAmountError(validateProductAmount(proAmount))}
                 />
-                {proAmountError && <p className="text-red-500 text-sm flex items-center gap-1"><span>⚠</span> {proAmountError}</p>}
+                {proAmountError && <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1"><span>⚠</span> {proAmountError}</p>}
               </div>
-
-              <div className="flex flex-col gap-2 flex-1">
-                <span className="text-sm font-semibold text-gray-700">Product Capacity</span>
-                <input
-                  type="number"
-                  name="maxAmount"
-                  className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${proMaxAmountError ? 'border-red-400' : 'border-gray-300'}`}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Capacity</label>
+                <input type="number" name="maxAmount" className={`w-full h-11 px-4 rounded-xl bg-gray-50 border outline-none transition text-sm ${proMaxAmountError ? 'border-red-400 focus:border-red-400' : 'border-gray-200 focus:border-gray-400 focus:bg-white'}`}
                   placeholder="100"
                   onChange={(e) => { setProMaxAmount(Number(e.target.value)); if (proMaxAmountError) setProMaxAmountError(validateProductMaxAmount(Number(e.target.value), proAmount)) }}
                   onBlur={() => setProMaxAmountError(validateProductMaxAmount(proMaxAmount, proAmount))}
                 />
-                {proMaxAmountError && <p className="text-red-500 text-sm flex items-center gap-1"><span>⚠</span> {proMaxAmountError}</p>}
+                {proMaxAmountError && <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1"><span>⚠</span> {proMaxAmountError}</p>}
               </div>
             </div>
 
-            {/* ── Initial Value ── */}
-            <div className="flex flex-col gap-2">
-              <p className="text-sm font-semibold text-gray-700">Initial Value</p>
-              <div className="w-full flex gap-4">
-                <div
-                  className={`flex-1 h-20 flex flex-col items-center justify-center border ${proAvb === 'Aviable' ? 'bg-green-400/40 border-green-400' : 'border-gray-300'} rounded-xl hover:bg-green-400/60 transition duration-200 cursor-pointer`}
-                  onClick={() => { setProAvb('Aviable'); setProAvbError(null) }}
-                >
-                  <Image src={highItem} alt="aviable" />
-                  <p>Available</p>
+            <div>
+              <p className="text-sm font-medium text-gray-700 mb-3">Initial Status</p>
+              <div className="grid grid-cols-3 gap-3">
+                <div className={`h-20 flex flex-col items-center justify-center border rounded-xl cursor-pointer transition-all text-sm font-medium gap-2 ${proAvb === 'Aviable' ? 'bg-green-50 border-green-300 text-green-700' : 'bg-gray-50 border-gray-200 text-gray-500 hover:bg-gray-100'}`}
+                  onClick={() => { setProAvb('Aviable'); setProAvbError(null) }}>
+                  <Image src={highItem} alt="aviable" width={22} />Available
                 </div>
-                <div
-                  className={`flex-1 h-20 flex flex-col items-center justify-center border ${proAvb === 'Low stock' ? 'bg-yellow-400/40 border-yellow-400' : 'border-gray-300'} rounded-xl hover:bg-yellow-400/60 transition duration-200 cursor-pointer`}
-                  onClick={() => { setProAvb('Low stock'); setProAvbError(null) }}
-                >
-                  <Image src={lowItem} alt="lowStock" />
-                  <p>Low Stock</p>
+                <div className={`h-20 flex flex-col items-center justify-center border rounded-xl cursor-pointer transition-all text-sm font-medium gap-2 ${proAvb === 'Low stock' ? 'bg-yellow-50 border-yellow-300 text-yellow-700' : 'bg-gray-50 border-gray-200 text-gray-500 hover:bg-gray-100'}`}
+                  onClick={() => { setProAvb('Low stock'); setProAvbError(null) }}>
+                  <Image src={lowItem} alt="lowStock" width={22} />Low Stock
                 </div>
-                <div
-                  className={`flex-1 h-20 flex flex-col items-center justify-center border ${proAvb === 'No stock' ? 'bg-red-400/40 border-red-400' : 'border-gray-300'} rounded-xl hover:bg-red-400/60 transition duration-200 cursor-pointer`}
-                  onClick={() => { setProAvb('No stock'); setProAvbError(null) }}
-                >
-                  <Image src={noStockItem} alt="noStock" />
-                  <p>No stock</p>
+                <div className={`h-20 flex flex-col items-center justify-center border rounded-xl cursor-pointer transition-all text-sm font-medium gap-2 ${proAvb === 'No stock' ? 'bg-red-50 border-red-300 text-red-700' : 'bg-gray-50 border-gray-200 text-gray-500 hover:bg-gray-100'}`}
+                  onClick={() => { setProAvb('No stock'); setProAvbError(null) }}>
+                  <Image src={noStockItem} alt="noStock" width={22} />No Stock
                 </div>
               </div>
-              {proAvbError && <p className="text-red-500 text-sm flex items-center gap-1"><span>⚠</span> {proAvbError}</p>}
+              {proAvbError && <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1"><span>⚠</span> {proAvbError}</p>}
             </div>
 
           </div>
 
-          <div className="flex gap-3 mt-8">
-            <button
-              className="flex-1 py-3 bg-gray-200 text-gray-900 rounded-xl font-semibold hover:bg-gray-300 transition duration-200"
-              onClick={() => {
-                setOpenDiv(false)
-                setProNameError(null); setProAmountError(null)
-                setProTypeError(null); setProMaxAmountError(null); 
-                setProAvbError(null)
-              }}
-            >
+          <div className="flex gap-3 mt-6 pt-5 border-t border-gray-100">
+            <button className="flex-1 h-11 rounded-xl border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+              onClick={() => { setOpenDiv(false); setProNameError(null); setProAmountError(null); setProTypeError(null); setProMaxAmountError(null); setProAvbError(null) }}>
               Cancel
             </button>
-            <button
-              className="flex-1 py-3 bg-blue-500 text-white rounded-xl font-semibold hover:bg-blue-600 transition duration-200"
-              onClick={createProductList}
-            >
-              Create Item
+            <button className="flex-1 h-11 rounded-xl bg-gray-900 text-white text-sm font-medium hover:bg-gray-700 transition-colors"
+              onClick={createProductList}>
+              Create Product
             </button>
           </div>
         </div>
       </div>
 
+      {/* Upload Image modal */}
+      {showImagePanel &&
+        <div className="fixed inset-0 flex items-center justify-center z-20 bg-black/30 backdrop-blur-sm p-4">
+          <div className="w-full max-w-lg rounded-2xl border border-gray-200 bg-white shadow-2xl overflow-hidden">
 
-      {/* Upload Image / imagen container */}
-      {showImagePanel ? 
-        <>
-        <div className="fixed inset-0 flex items-center justify-center z-20 bg-black/20 p-4">
-          <div className="w-full max-w-2xl rounded-3xl border border-gray-200 bg-white shadow-2xl overflow-hidden">
-
-            <div className="flex items-center justify-between border-b border-gray-200 px-6 py-5">
-              <p className="text-lg font-semibold text-gray-900">Upload product picture</p>
-              <button className="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-200 hover:bg-gray-100 transition cursor-pointer"
+            <div className="flex items-center justify-between border-b border-gray-100 px-6 py-5">
+              <p className="font-semibold text-gray-900">Upload image</p>
+              <button className="w-9 h-9 flex items-center justify-center rounded-xl border border-gray-200 hover:bg-gray-100 transition-colors cursor-pointer"
                 onClick={() => { setShowImagePanel(false); setPendingFile(null) }}>
                 <Image src={closeIcon} alt="closeContainer" />
               </button>
             </div>
 
             <div className="p-6">
-              <div
-                className={`rounded-2xl border-2 border-dashed px-6 py-12 transition ${pendingFile ? 'border-blue-400 bg-blue-50' : 'border-gray-300 bg-gray-50'}`}
+              <div className={`rounded-2xl border-2 border-dashed px-6 py-12 transition-colors cursor-pointer ${pendingFile ? 'border-gray-900 bg-gray-50' : 'border-gray-200 bg-gray-50 hover:border-gray-400'}`}
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={(e) => {
                   e.preventDefault()
                   const file = e.dataTransfer.files?.[0]
                   const allowed = ['image/png', 'image/jpeg', 'image/webp']
-                  if (file && allowed.includes(file.type)) {
-                    setPendingFile(file)
-                  } else {
-                    alert('Solo PNG, JPG o WEBP')
-                  }
+                  if (file && allowed.includes(file.type)) { setPendingFile(file) } else { alert('PNG, JPG or WEBP only') }
                 }}
               >
-                <div className="flex flex-col items-center justify-center text-center">
-                  <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-sm">
+                <div className="flex flex-col items-center justify-center text-center gap-3">
+                  <div className="w-12 h-12 flex items-center justify-center rounded-xl bg-white border border-gray-200 shadow-sm">
                     <Image src={imageCreateIcon} alt="CreateIcon" />
                   </div>
-              
                   {pendingFile ? (
-                    <p className="text-lg font-semibold text-blue-600">{pendingFile.name}</p>
+                    <div>
+                      <p className="font-semibold text-gray-900">{pendingFile.name}</p>
+                      <p className="text-xs text-gray-400 mt-0.5">Ready to upload</p>
+                    </div>
                   ) : (
-                    <>
-                      <p className="text-lg font-semibold text-gray-900">Drag your image here</p>
-                      <p className="mt-2 text-sm text-gray-500">PNG, JPG, o WEBP</p>
-                    </>
+                    <div>
+                      <p className="font-semibold text-gray-900">Drop your image here</p>
+                      <p className="text-sm text-gray-400 mt-1">PNG, JPG, or WEBP</p>
+                    </div>
                   )}
-
-                  <input
-                    type="file"
-                    accept="image/png, image/jpeg, image/webp"
-                    className="hidden"
-                    ref={fileInputRef}
-                    onChange={(e) => {
-                      const file = e.target.files?.[0]
-                      if (file) setPendingFile(file)
-                    }}
+                  <input type="file" accept="image/png, image/jpeg, image/webp" className="hidden" ref={fileInputRef}
+                    onChange={(e) => { const file = e.target.files?.[0]; if (file) setPendingFile(file) }}
                   />
-                  <button
-                    className="mt-5 rounded-xl border border-gray-300 bg-white px-5 py-2.5 font-medium text-gray-700 transition hover:bg-gray-100"
-                    onClick={() => fileInputRef.current?.click()}
-                  >
-                    Search file
-                  </button>
+                  <button className="h-9 px-4 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors"
+                    onClick={() => fileInputRef.current?.click()}>Browse files</button>
                 </div>
               </div>
             </div>
-                  
-            <div className="flex flex-col-reverse gap-3 border-t border-gray-200 px-6 py-5 sm:flex-row sm:justify-end">
-              <button className="rounded-xl border border-gray-300 px-6 py-3 font-medium text-gray-700 transition hover:bg-gray-100"
-                onClick={() => { setShowImagePanel(false); setPendingFile(null) }}>
-                Cancel
-              </button>
-              <button
-                className="rounded-xl bg-black px-6 py-3 font-medium text-white transition hover:opacity-90 disabled:opacity-40"
-                disabled={!pendingFile}
-                onClick={() => pendingFile && uploadImage(pendingFile)}
-              >
-                Save image
+
+            <div className="flex gap-3 border-t border-gray-100 px-6 py-5 justify-end">
+              <button className="px-5 h-10 rounded-xl border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                onClick={() => { setShowImagePanel(false); setPendingFile(null) }}>Cancel</button>
+              <button className={`px-5 h-10 rounded-xl bg-gray-900 text-white text-sm font-medium transition-colors ${!pendingFile ? 'opacity-40 cursor-not-allowed' : 'hover:bg-gray-700'}`}
+                disabled={!pendingFile} onClick={() => pendingFile && uploadImage(pendingFile)}>
+                {uploadingImage ? 'Uploading...' : 'Save image'}
               </button>
             </div>
-            {uploadingImage && (
-              <div className="flex items-center justify-center gap-3 px-6 py-4 bg-blue-50 border-t border-blue-100">
-                <svg className="animate-spin w-5 h-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
-                </svg>
-                <p className="text-sm font-medium text-blue-600">Uploading image...</p>
-              </div>
-            )}
           </div>
         </div>
-        </> 
-        : 
-        <></>}
-        {openImageContainer && imageOpen && (
-          <div className="fixed inset-0 flex items-center justify-center z-30 bg-black/70 p-4"
-            onClick={() => { setOpenImageContainer(false); setImageOpen(undefined) }}>
-            <div className="relative max-w-2xl w-full" onClick={(e) => e.stopPropagation()}>
-              <button
-                className="absolute -top-4 -right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 transition z-10 cursor-pointer"
-                onClick={() => { setOpenImageContainer(false); setImageOpen(undefined) }}>
-                <Image src={closeIcon} alt="close" />
-              </button>
-              <img
-                src={`https://ylduecmgivurnnlcskus.supabase.co/storage/v1/object/public/listItems/${arrInfo.id}/${imageOpen}`}
-                alt="product"
-                className="w-full rounded-2xl shadow-2xl"
-              />
-            </div>
+      }
+
+      {/* Full screen image viewer */}
+      {openImageContainer && imageOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-30 bg-black/80 p-4"
+          onClick={() => { setOpenImageContainer(false); setImageOpen(undefined) }}>
+          <div className="relative max-w-2xl w-full" onClick={(e) => e.stopPropagation()}>
+            <button className="absolute -top-4 -right-4 w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg hover:bg-gray-100 transition z-10 cursor-pointer"
+              onClick={() => { setOpenImageContainer(false); setImageOpen(undefined) }}>
+              <Image src={closeIcon} alt="close" />
+            </button>
+            <img src={`https://ylduecmgivurnnlcskus.supabase.co/storage/v1/object/public/listItems/${arrInfo.id}/${imageOpen}`}
+              alt="product" className="w-full rounded-2xl shadow-2xl" />
           </div>
-        )}
-    </> 
-    : 
+        </div>
+      )}
+    </>
+    :
     <>
       <div className="w-full flex items-center justify-center py-20">
-        <div className="flex flex-col items-center gap-6">
-          <div className="w-20 h-20 flex items-center justify-center rounded-full bg-linear-to-br from-gray-100 to-white shadow-inner">
-            <svg className="animate-spin w-10 h-10 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-16 h-16 flex items-center justify-center rounded-2xl bg-gray-100 border border-gray-200">
+            <svg className="animate-spin w-8 h-8 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
             </svg>
           </div>
-
           <div className="text-center">
-            <h2 className="text-lg font-semibold text-gray-900">Loading list</h2>
-            <p className="text-sm text-gray-500 mt-1">Fetching your items — this will only take a moment.</p>
+            <h2 className="text-base font-semibold text-gray-900">Loading</h2>
+            <p className="text-sm text-gray-400 mt-0.5">Fetching your items...</p>
           </div>
         </div>
       </div>
