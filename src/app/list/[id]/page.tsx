@@ -391,6 +391,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
 
   /* Edit people from arr */
   const [peopleArr, setPeopleArr] = useState<string[]>(arrInfo.people ?? [])
+  console.log('beside the useState: ' + peopleArr)
   const [newEmail, setNewEmail] = useState('')
   const [emailError, setEmailError] = useState<string | null>(null)
 
@@ -402,9 +403,12 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
     console.log('this is the people arr ' + peopleArr)
     console.log('this is the email trimmed ' + trimmed)
     console.log('this is the email newEmail ' + newEmail)
-    setPeopleArr([...arrInfo.people, trimmed])
-    setNewEmail('')
-    setEmailError(null)
+    if(arrInfo) {
+      setPeopleArr([...arrInfo.people, trimmed])
+      setNewEmail('')
+      setEmailError(null)
+    }
+
   }
 
   const removePerson = (email: string) => {
