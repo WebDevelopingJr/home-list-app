@@ -35,54 +35,77 @@ export default function Home() {
   return (  
    <>
       <Header />
-      <main className="w-full flex flex-col items-center mt-20"> 
-          <div className="size-25 bg-[#B0E0E6]/40 border border-blue-500/20 p-5 rounded-2xl">
-            <Image src={iconImage} alt="Icon" />
+      <main className="w-full flex flex-col items-center">
+
+        {/* Hero */}
+        <div className="w-full flex flex-col items-center text-center px-6 pt-20 pb-16">
+          <div className="w-14 h-14 bg-gray-100 border border-gray-200 rounded-2xl flex items-center justify-center mb-6 shadow-sm">
+            <Image src={iconImage} alt="Icon" className="w-8 h-8" />
           </div>
-          <div className="w-[90%] text-center mt-5 max-w-2xl">
-            <h1 className="text-3xl mb-5 font-semiboldbold ">Home List</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni delectus rem beatae expedita explicabo culpa a velit hic in. Voluptas natus doloremque, accusantium nemo quam aliquam delectus pariatur harum libero.</p>  
-          </div>  
-          <div className="w-[90%] max-w-xl flex items-center justify-center flex-row mt-8 gap-6">
-            <Link className="w-60 h-12 flex justify-center text-center items-center drop-shadow-sm bg-gray-300/15 backdrop-blur-2xl text-xl rounded-3xl transition duration-200 hover:bg-white/60" href={'/login'}>Log in</Link>
-            <Link className="w-60 h-12 flex justify-center text-center items-center drop-shadow-sm bg-[#1cc0d65b]/40 text-xl rounded-3xl transition duration-200 hover:bg-[#1fbed3a6]/50 hover:text-white" href={'/signup'}>Create Account</Link>
+          <h1 className="text-4xl font-bold text-gray-900 tracking-tight max-w-lg leading-tight">
+            Manage your home inventory, together
+          </h1>
+          <p className="text-gray-400 mt-4 max-w-md text-base leading-relaxed">
+            Create shared lists, track stock levels, and always know what you have at home — for free.
+          </p>
+          <div className="flex items-center gap-3 mt-8">
+            <Link className="h-11 px-6 flex items-center text-sm font-medium text-gray-700 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 transition-colors shadow-sm" href={'/login'}>
+              Log in
+            </Link>
+            <Link className="h-11 px-6 flex items-center text-sm font-medium text-white bg-gray-900 rounded-xl hover:bg-gray-700 transition-colors shadow-sm" href={'/signup'}>
+              Create free account →
+            </Link>
           </div>
-          <div className="w-[90%] max-w-3xl h-0.5 bg-gray-100 my-10"></div>
-          
-          <div className="w-[90%] max-w-3xl lg:grid-cols-2 grid grid-cols-1 gap-4">{/* Info icons container */}
+        </div>
 
-            <div className="flex flex-col items-start justify-center gap-3 bg-[#b5ddec8b] p-6 rounded-lg border border-[#95d4eb]"> {/* Icon container info 1 */}
-              <div className="flex items-center justify-center gap-3">
-                <Image src={notebook} alt="notebookIcon" className="bg-blue-400 p-2 rounded-lg"  width={60} height={60} />
-                <p className="text-2xl">Lists</p>  
-              </div>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur velit optio adipisci dolorem ex placeat eaque?</p>
-            </div> 
-             
-            <div className="flex flex-col items-start justify-center gap-3 bg-[#ffe2ad9b] p-6 rounded-lg border border-[#ffd485]"> {/* Icon container info 2 */}
-              <div className="flex items-center justify-center gap-3">
-                <Image src={userIcon} alt="notebookIcon" className="bg-[#FFA500] p-2 rounded-lg"  width={60} height={60} />
-                <p className="text-2xl">Lists</p>  
-              </div>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur velit optio adipisci dolorem ex placeat eaque?</p>
-            </div>
+        {/* Divider */}
+        <div className="w-[90%] max-w-3xl h-px bg-gray-100 mb-12" />
 
-            <div className="flex flex-col items-start justify-center gap-3 bg-[#ffc2c296] p-6 rounded-lg border border-[#ffa5a5]"> {/* Icon container info 3 */}
-              <div className="flex items-center justify-center gap-3">
-                <Image src={lockIcon} alt="notebookIcon" className="bg-[#FF6B6B] p-2 rounded-lg"  width={60} height={60} />
-                <p className="text-2xl">Lists</p>  
-              </div>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur velit optio adipisci dolorem ex placeat eaque?</p>
-            </div>
+        {/* Feature cards */}
+        <div className="w-[90%] max-w-3xl grid grid-cols-1 lg:grid-cols-2 gap-3 pb-20">
 
-            <div className="flex flex-col items-start justify-center gap-3 bg-[#7e80829e] p-6 rounded-lg border border-[#747b81]"> {/* Icon container info 4 */}
-              <div className="flex items-center justify-center gap-3">
-                <Image src={targetIcon} alt="notebookIcon" className="bg-[#2C3E50] p-2 rounded-lg"  width={60} height={60} />
-                <p className="text-2xl">Lists</p>  
-              </div>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur velit optio adipisci dolorem ex placeat eaque?</p>
+          <div className="flex flex-col gap-3 p-6 rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+            <div className="w-10 h-10 bg-blue-50 border border-blue-100 rounded-xl flex items-center justify-center">
+              <Image src={notebook} alt="notebookIcon" width={22} height={22} />
             </div>
-          </div>        
+            <div>
+              <p className="font-semibold text-gray-900">Shared Lists</p>
+              <p className="text-sm text-gray-400 mt-1 leading-relaxed">Create lists and invite family or roommates to manage inventory together in real time.</p>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-3 p-6 rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+            <div className="w-10 h-10 bg-orange-50 border border-orange-100 rounded-xl flex items-center justify-center">
+              <Image src={userIcon} alt="userIcon" width={22} height={22} />
+            </div>
+            <div>
+              <p className="font-semibold text-gray-900">Members</p>
+              <p className="text-sm text-gray-400 mt-1 leading-relaxed">Invite people by email and control who has access to each list.</p>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-3 p-6 rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+            <div className="w-10 h-10 bg-red-50 border border-red-100 rounded-xl flex items-center justify-center">
+              <Image src={lockIcon} alt="lockIcon" width={22} height={22} />
+            </div>
+            <div>
+              <p className="font-semibold text-gray-900">Secure & Private</p>
+              <p className="text-sm text-gray-400 mt-1 leading-relaxed">Your data is protected. Only members you invite can see your lists.</p>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-3 p-6 rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+            <div className="w-10 h-10 bg-gray-100 border border-gray-200 rounded-xl flex items-center justify-center">
+              <Image src={targetIcon} alt="targetIcon" width={22} height={22} />
+            </div>
+            <div>
+              <p className="font-semibold text-gray-900">Stock Tracking</p>
+              <p className="text-sm text-gray-400 mt-1 leading-relaxed">Track quantity and capacity for every product with visual stock indicators.</p>
+            </div>
+          </div>
+
+        </div>
+
       </main>
    </>
   );
