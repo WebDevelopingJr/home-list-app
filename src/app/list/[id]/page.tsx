@@ -419,6 +419,8 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
         .from('list-elements')
         .update({ people: peopleArr })
         .eq('id', params?.id)
+
+        setOpenEditPanel(false)
     } catch (err) {
       console.error(err)
     }
@@ -514,7 +516,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
         <div className="flex items-center justify-between mb-5">
           <p className="font-semibold text-gray-900">Filters</p>
           <button className="text-xs text-gray-400 hover:text-gray-700 transition-colors"
-            onClick={()=> { setFitlCat(''); setFiltState(''); setFiltBrand('') }}>
+            onClick={()=> { setFitlCat(''); setFiltState(''); setFiltBrand(''); setFiltStore('')}}>
             Clear all
           </button>
         </div>
