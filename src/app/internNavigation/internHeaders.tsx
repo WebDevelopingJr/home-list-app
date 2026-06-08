@@ -46,7 +46,7 @@ export default function HeaderDash() {
   return (
     <>
     {userData ?
-      <div className="flex items-center justify-center bg-[#1b345f]">
+      <div className="flex items-center justify-center bg-[#09337f]">
         <div className="w-[90%] max-w-500 flex justify-between items-center py-5">
           <div className="flex flex-col gap-0.5">
             <p className="text-xs font-semibold tracking-widest text-gray-300 uppercase">Welcome back</p>

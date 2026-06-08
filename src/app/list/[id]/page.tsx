@@ -257,9 +257,17 @@ export default function ListDetail() {
 
   const fastFilter = (stateFilter: StateAviable | '') => {
     setFiltState(stateFilter)
-    if(filtState) {
-      filterCategory()
-    }
+
+    const filtArr = dataArrList.filter((el) => {
+      return (
+        (el.type  === filtCat  || filtCat  === '') &&
+        (el.avb   === stateFilter || stateFilter === '') && 
+        (el.brand === filtBrand || filtBrand === '') &&
+        (filtStore === '' || ('store' in el && el.store === filtStore))
+      )
+    })
+
+    setShowArrList(filtArr)  // ✅ solo esto, sin cerrar el modal
   }
   /* UPLOAD IMAGE */
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -391,6 +399,9 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
     if (!trimmed) { setEmailError('Enter an email'); return }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) { setEmailError('Invalid email'); return }
     if (peopleArr.includes(trimmed)) { setEmailError('Already added'); return }
+    console.log('this is the people arr ' + peopleArr)
+    console.log('this is the email trimmed ' + trimmed)
+    console.log('this is the email newEmail ' + newEmail)
     setPeopleArr(prev => [...prev, trimmed])
     setNewEmail('')
     setEmailError(null)
@@ -457,7 +468,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
     {arrInfo && dataArrList ? 
     <>
       {/* Header */}
-      <div className="w-full flex justify-center items-center pt-8 pb-8 bg-[#1b345f]">
+      <div className="w-full flex justify-center items-center pt-8 pb-8 bg-[#09337f]">
         <div className="w-[90%] max-w-500 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
             <Link href={'/dashboard'}><div className="w-9 h-9 flex items-center justify-center rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors border border-gray-200"><Image src={returnIcon} alt="returnDashboard" /></div></Link>
@@ -856,7 +867,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
 
         {/* Member list */}
         <div className="flex flex-col gap-2 mb-4">
-          {peopleArr.map((el, _) => (
+          {arrInfo.people.map((el: string, _: number) => (
             <div key={`${el}-${_}`} className="flex items-center justify-between px-4 py-2.5 rounded-xl border border-gray-100 bg-gray-50">
               <div className="flex items-center gap-3">
                 <div className="w-7 h-7 rounded-lg bg-sky-100 border border-sky-200 flex items-center justify-center shrink-0">
@@ -881,7 +892,6 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
           <div className="flex-1 relative">
             <input type="email" placeholder="Add by email" value={newEmail} className={`w-full h-10 px-4 rounded-xl bg-gray-50 border outline-none transition text-sm ${emailError ? 'border-red-400 focus:border-red-400' : 'border-gray-200 focus:border-gray-400 focus:bg-white'}`}
               onChange={(e) => { setNewEmail(e.target.value); if (emailError) setEmailError(null) }}
-              onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addPerson() } }}
             />
           </div>
           <button className="h-10 px-4 rounded-xl bg-sky-500 text-white text-sm font-medium hover:bg-sky-600 transition-colors"
