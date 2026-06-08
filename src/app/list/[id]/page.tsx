@@ -401,7 +401,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) { setEmailError('Invalid email'); return }
     if (peopleArr.includes(trimmed)) { setEmailError('Already added'); return }
     if(arrInfo) {
-      setPeopleArr([...arrInfo.people, trimmed])
+      setPeopleArr([...peopleArr, trimmed])
       setNewEmail('')
       setEmailError(null)
     }
