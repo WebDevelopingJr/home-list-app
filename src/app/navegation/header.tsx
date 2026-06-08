@@ -32,6 +32,7 @@ export default function Header() {
         }
         router.refresh()
     }
+    
     useEffect(() => {
       async function getUserConfirmation() {
         try {
