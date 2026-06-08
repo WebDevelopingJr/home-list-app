@@ -391,7 +391,6 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
 
   /* Edit people from arr */
   const [peopleArr, setPeopleArr] = useState<string[]>(arrInfo.people ?? [])
-  console.log('beside the useState: ' + peopleArr)
   const [newEmail, setNewEmail] = useState('')
   const [emailError, setEmailError] = useState<string | null>(null)
 
@@ -400,9 +399,6 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
     if (!trimmed) { setEmailError('Enter an email'); return }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) { setEmailError('Invalid email'); return }
     if (peopleArr.includes(trimmed)) { setEmailError('Already added'); return }
-    console.log('this is the people arr ' + peopleArr)
-    console.log('this is the email trimmed ' + trimmed)
-    console.log('this is the email newEmail ' + newEmail)
     if(arrInfo) {
       setPeopleArr([...arrInfo.people, trimmed])
       setNewEmail('')
@@ -422,7 +418,6 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
         .from('list-elements')
         .update({ people: peopleArr })
         .eq('id', params?.id)
-        console.log(peopleArr)
     } catch (err) {
       console.error(err)
     }
@@ -467,8 +462,6 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
       
         if(data) {
           setArrInfo(data[0])
-          console.log(data[0])
-          console.log('This is the userData: '+data)
           setDataArrList(data[0].itemsList)
           setShowArrList(data[0].itemsList)
         }
@@ -880,7 +873,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
 
         {/* Member list */}
         <div className="flex flex-col gap-2 mb-4">
-          {arrInfo.people.map((el: string, _: number) => (
+          {peopleArr.map((el: string, _: number) => (
             <div key={`${el}-${_}`} className="flex items-center justify-between px-4 py-2.5 rounded-xl border border-gray-100 bg-gray-50">
               <div className="flex items-center gap-3">
                 <div className="w-7 h-7 rounded-lg bg-sky-100 border border-sky-200 flex items-center justify-center shrink-0">
