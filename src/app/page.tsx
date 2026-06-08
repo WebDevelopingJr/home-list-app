@@ -86,7 +86,7 @@ export default function Home() {
         <div className="w-[90%] max-w-3xl grid grid-cols-1 lg:grid-cols-2 gap-3 pb-20">
 
           <div className="flex flex-col gap-3 p-6 rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 bg-sky-50 border border-sky-200 rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 bg-[#61a1bb] border border-sky-200 rounded-xl flex items-center justify-center">
               <Image src={notebook} alt="notebookIcon" width={22} height={22} />
             </div>
             <div>
@@ -96,7 +96,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col gap-3 p-6 rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 bg-orange-50 border border-orange-200 rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 bg-[orange] border border-orange-200 rounded-xl flex items-center justify-center">
               <Image src={userIcon} alt="userIcon" width={22} height={22} />
             </div>
             <div>
@@ -106,7 +106,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col gap-3 p-6 rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 bg-red-50 border border-red-200 rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 bg-[#ff8a8a] border border-red-200 rounded-xl flex items-center justify-center">
               <Image src={lockIcon} alt="lockIcon" width={22} height={22} />
             </div>
             <div>
@@ -116,7 +116,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col gap-3 p-6 rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 bg-sky-50 border border-sky-200 rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 bg-[#3b6bc1] border border-sky-200 rounded-xl flex items-center justify-center">
               <Image src={targetIcon} alt="targetIcon" width={22} height={22} />
             </div>
             <div>
