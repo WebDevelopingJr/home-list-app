@@ -450,6 +450,12 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
     deleteList,
   }
   
+  useEffect(() => {
+    if (arrInfo?.people) {
+      setPeopleArr(arrInfo.people)
+    }
+  }, [arrInfo])
+
   useEffect(()=>{
 
     const callDataArr = async () => {
