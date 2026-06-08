@@ -865,7 +865,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
       
 
       {/* Share to people div */}
-      <div className={`w-full max-w-lg bg-white border ${openEditPanel ? 'block' : 'hidden'} border-gray-200 rounded-2xl shadow-sm p-6  absolute z-10 top-1/2 left-1/2 transform translate-1/2`}>
+      <div className={`w-full max-w-lg bg-white border ${openEditPanel ? 'block' : 'hidden'} border-gray-200 rounded-2xl shadow-sm p-6  absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}>
 
       <div className="mb-5">
         <div className="flex items-center justify-between">
