@@ -199,83 +199,83 @@ const createDbData = async () => {
   
   return (
     <>
-      <HeaderDash />
-      <main>
-        <div>
-          
-          <div className="w-full flex justify-center items-center my-8"> {/* Top part */}
-            <div className="w-[90%] max-w-300 flex justify-between">
-              <div>
-                <h1 className="text-gray-600 text-sm">YOUR LISTS</h1>
-                <p className="text-2xl mt-1">{userArr.length} Lists</p>
-              </div>
+    <HeaderDash />
+    <main>
+      <div>
 
-              <button className="bg-black text-white w-40 h-12 rounded-xl flex items-center justify-center gap-2 cursor-pointer" onClick={()=> setActiveContainer(el => !el)}> <Image src={addIcon} alt="create" /> Create List</button>
+        <div className="w-full flex justify-center items-center mt-12 mb-8"> {/* Top part */}
+          <div className="w-[90%] max-w-300 flex justify-between items-end">
+            <div>
+              <p className="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-1">Your Lists</p>
+              <h1 className="text-3xl font-semibold text-gray-900 tracking-tight">{userArr.length} Lists</h1>
             </div>
+            <button className="bg-gray-900 text-white px-5 h-11 rounded-xl flex items-center justify-center gap-2 text-sm font-medium hover:bg-gray-700 transition-colors cursor-pointer" onClick={()=> setActiveContainer(el => !el)}>
+              <Image src={addIcon} alt="create" /> Create List
+            </button>
           </div>
-          
-          <div className="w-full flex items-center justify-center"> {/* Container of elements */}
-            <div className="w-[90%] max-w-300 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {userArr ? 
+        </div>
+
+        <div className="w-full flex items-center justify-center"> {/* Container of elements */}
+          <div className="w-[90%] max-w-300 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {userArr ?
             <>
               {userArr.map((el: any, inx: number) => {
                 return (
-                <div className="w-auto bg-blue-100 p-8 rounded-xl border border-blue-200 relative group" key={inx}>
-                  <Link href={`list/${el.id}`} key={inx}>  
-                    <h1 className="text-2xl font-semibold">{el.name}</h1>
-                    <div className="flex gap-10 mt-5">
-                      <div>
-                        <p className="text-xs">PRODUCTS</p>
-                        <p className="text-2xl mt-1 font-bold">{el.itemsList.length}</p>
-                      </div>
-                      <div>
-                        <p className="text-xs">MEMBERS</p>
-                        <p className="text-2xl mt-1 font-bold">{el.people.length}</p>
+                <div className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow relative group overflow-hidden" key={inx}>
+                  <Link href={`list/${el.id}`} key={inx}>
+                    <div className="p-6">
+                      <h1 className="text-lg font-semibold text-gray-900 truncate">{el.name}</h1>
+                      <div className="flex gap-8 mt-4">
+                        <div>
+                          <p className="text-[10px] font-semibold tracking-widest text-gray-400 uppercase">Products</p>
+                          <p className="text-2xl font-bold text-gray-900 mt-0.5">{el.itemsList.length}</p>
+                        </div>
+                        <div>
+                          <p className="text-[10px] font-semibold tracking-widest text-gray-400 uppercase">Members</p>
+                          <p className="text-2xl font-bold text-gray-900 mt-0.5">{el.people.length}</p>
+                        </div>
                       </div>
                     </div>
                   </Link>
 
                   {/* Mobile/tablet: botones abajo siempre visibles */}
-                  <div className="flex gap-2 mt-5 lg:hidden border-0 border-t pt-5 border-gray-400">
-                    <div className="bg-white p-2 rounded-xl hover:bg-red-500 cursor-pointer" onClick={() => setConfirmDelete(el)}>
+                  <div className="flex gap-2 px-6 pb-5 lg:hidden border-t border-gray-100 pt-4">
+                    <button className="p-2 rounded-lg hover:bg-red-50 cursor-pointer transition-colors" onClick={() => setConfirmDelete(el)}>
                       <Image src={trashbag} alt="deleteTask" />
-                    </div>
-                    <div className="bg-white p-2 rounded-xl hover:bg-gray-200 cursor-pointer" onClick={() => setArrEdit(el)}>
+                    </button>
+                    <button className="p-2 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors" onClick={() => setArrEdit(el)}>
                       <Image src={editIcon} alt="editTask" />
-                    </div>
+                    </button>
                   </div>
 
-                  {/* Desktop: botones hover al lado */}
-                  <div className="hidden lg:flex absolute top-5 right-0 opacity-0 flex-col gap-5 transition-all duration-200 group-hover:opacity-100 group-hover:right-10">
-                    <div className="bg-white p-2 rounded-xl hover:bg-red-500 cursor-pointer" onClick={() => setConfirmDelete(el)}>
+                  {/* Desktop: botones hover */}
+                  <div className="hidden lg:flex absolute top-4 right-4 opacity-0 flex-col gap-2 transition-all duration-200 group-hover:opacity-100">
+                    <button className="p-2 rounded-lg bg-white border border-gray-200 shadow-sm hover:bg-red-50 hover:border-red-200 cursor-pointer transition-colors" onClick={() => setConfirmDelete(el)}>
                       <Image src={trashbag} alt="deleteTask" />
-                    </div>
-                    <div className="bg-white p-2 rounded-xl hover:bg-gray-200 cursor-pointer" onClick={() => setArrEdit(el)}>
+                    </button>
+                    <button className="p-2 rounded-lg bg-white border border-gray-200 shadow-sm hover:bg-gray-100 cursor-pointer transition-colors" onClick={() => setArrEdit(el)}>
                       <Image src={editIcon} alt="editTask" />
-                    </div>
+                    </button>
                   </div>
                 </div>
                 )
               })}
 
               {arrEdit && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm p-6 z-10 overflow-y-scroll sm:overflow-hidden">
-                  <div className="w-full max-w-lg bg-white rounded-3xl shadow-xl border border-zinc-200 p-8">
+                <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm p-6 z-10 overflow-y-scroll sm:overflow-hidden">
+                  <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-gray-200 p-8">
 
                     <div className="mb-6">
-                      <h1 className="text-2xl font-semibold text-zinc-900">Edit List</h1>
-                      <p className="text-zinc-500 mt-1 text-sm">Update name or members.</p>
+                      <h1 className="text-xl font-semibold text-gray-900">Edit List</h1>
+                      <p className="text-gray-400 mt-1 text-sm">Update name or members.</p>
                     </div>
 
                     <div className="space-y-5">
 
                       {/* ── List name ── */}
                       <div>
-                        <label className="block text-sm font-medium text-zinc-700 mb-2">List name</label>
-                        <input
-                          type="text"
-                          value={arrEdit.name}
-                          className={`w-full h-12 px-4 rounded-2xl bg-zinc-100 focus:bg-white border outline-none transition ${editNameError ? 'border-red-400' : 'border-transparent focus:border-blue-400'}`}
+                        <label className="block text-sm font-medium text-gray-700 mb-2">List name</label>
+                        <input type="text" value={arrEdit.name} className={`w-full h-11 px-4 rounded-xl bg-gray-50 border outline-none transition text-sm ${editNameError ? 'border-red-400 focus:border-red-400' : 'border-gray-200 focus:border-gray-400 focus:bg-white'}`}
                           onChange={(e) => {
                             setArrEdit({ ...arrEdit, name: e.target.value })
                             if (editNameError) setEditNameError(validateListName(e.target.value))
@@ -283,7 +283,7 @@ const createDbData = async () => {
                           onBlur={() => setEditNameError(validateListName(arrEdit.name))}
                         />
                         {editNameError && (
-                          <p className="text-red-500 text-sm mt-1 flex items-center gap-1">
+                          <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1">
                             <span>⚠</span> {editNameError}
                           </p>
                         )}
@@ -291,20 +291,19 @@ const createDbData = async () => {
 
                       {/* ── Members ── */}
                       <div>
-                        <p className="text-sm font-medium text-zinc-700 mb-3">Members</p>
+                        <p className="text-sm font-medium text-gray-700 mb-3">Members</p>
                         <div className="flex flex-col gap-2">
                           {arrEdit.people.map((person: string, _: number) => (
-                            <div key={_} className="flex items-center justify-between px-4 py-2 rounded-2xl border border-zinc-200 bg-zinc-50">
+                            <div key={_} className="flex items-center justify-between px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50">
                               <div className="flex items-center gap-2">
-                                <Image src={userList} alt="user" width={22} />
-                                <p className="text-sm">{person}</p>
+                                <Image src={userList} alt="user" width={18} />
+                                <p className="text-sm text-gray-700">{person}</p>
                               </div>
                               {person !== userData.email && _ !== 0 && (
-                                <div
-                                  className="cursor-pointer"
+                                <div className="cursor-pointer p-1 rounded-lg hover:bg-red-50 transition-colors"
                                   onClick={() => setArrEdit({ ...arrEdit, people: arrEdit.people.filter((p: string) => p !== person) })}
                                 >
-                                  <Image src={trashbag} alt="remove" width={16} />
+                                  <Image src={trashbag} alt="remove" width={14} />
                                 </div>
                               )}
                             </div>
@@ -313,11 +312,7 @@ const createDbData = async () => {
 
                         {/* ── Add by email ── */}
                         <div className="flex gap-2 mt-3">
-                          <input
-                            type="email"
-                            placeholder="Add by email"
-                            value={peopleInvited}
-                            className={`flex-1 h-10 px-4 rounded-2xl bg-zinc-100 border outline-none transition text-sm ${editInviteError ? 'border-red-400' : 'border-transparent focus:border-blue-400'}`}
+                          <input type="email" placeholder="Add by email" value={peopleInvited} className={`flex-1 h-10 px-4 rounded-xl bg-gray-50 border outline-none transition text-sm ${editInviteError ? 'border-red-400' : 'border-gray-200 focus:border-gray-400 focus:bg-white'}`}
                             onChange={(e) => {
                               setPeopleInvited(e.target.value)
                               if (editInviteError) setEditInviteError(null)
@@ -339,8 +334,7 @@ const createDbData = async () => {
                               }
                             }}
                           />
-                          <button
-                            className="px-4 h-10 rounded-2xl bg-blue-500 text-white text-sm hover:bg-blue-600 transition"
+                          <button className="px-4 h-10 rounded-xl bg-gray-900 text-white text-sm hover:bg-gray-700 transition-colors font-medium"
                             onClick={() => {
                               const error = validateInviteEmail(peopleInvited)
                               if (error) { setEditInviteError(error); return }
@@ -360,22 +354,20 @@ const createDbData = async () => {
                         </div>
 
                         {editInviteError && (
-                          <p className="text-red-500 text-sm mt-2 flex items-center gap-1">
+                          <p className="text-red-500 text-xs mt-2 flex items-center gap-1">
                             <span>⚠</span> {editInviteError}
                           </p>
                         )}
                       </div>
                     </div>
 
-                    <div className="flex justify-end gap-3 mt-8 pt-5 border-t border-zinc-200">
-                      <button
-                        className="px-5 h-11 rounded-xl bg-zinc-100 hover:bg-zinc-200 transition"
+                    <div className="flex justify-end gap-3 mt-8 pt-5 border-t border-gray-100">
+                      <button className="px-5 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors text-sm font-medium"
                         onClick={() => { setArrEdit(null); setEditNameError(null); setEditInviteError(null) }}
                       >
                         Cancel
                       </button>
-                      <button
-                        className="px-5 h-11 rounded-xl bg-black text-white hover:bg-zinc-800 transition"
+                      <button className="px-5 h-10 rounded-xl bg-gray-900 text-white hover:bg-gray-700 transition-colors text-sm font-medium"
                         onClick={editListDb}
                       >
                         Save Changes
@@ -386,171 +378,158 @@ const createDbData = async () => {
                 </div>
               )}
 
-            {confirmDelete && (
-              <div className="fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm p-6 z-20">
-                <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-zinc-200 p-8">
-                  <div className="mb-6">
-                    <h1 className="text-2xl font-semibold text-zinc-900">Delete List</h1>
-                    <p className="text-zinc-500 mt-2 text-sm">
-                      Are you sure you want to delete <span className="font-semibold text-zinc-800">"{confirmDelete.name}"</span>? This action cannot be undone.
-                    </p>
-                  </div>
+              {confirmDelete && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm p-6 z-20">
+                  <div className="w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-gray-200 p-8">
+                    <div className="mb-6">
+                      <div className="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center mb-4">
+                        <Image src={trashbag} alt="delete" width={18} />
+                      </div>
+                      <h1 className="text-lg font-semibold text-gray-900">Delete List</h1>
+                      <p className="text-gray-400 mt-1.5 text-sm">
+                        Are you sure you want to delete <span className="font-medium text-gray-700">"{confirmDelete.name}"</span>? This can't be undone.
+                      </p>
+                    </div>
 
-                  <div className="flex justify-end gap-3 pt-5 border-t border-zinc-200">
-                    <button className="px-5 h-11 rounded-xl bg-zinc-100 hover:bg-zinc-200 transition" onClick={() => setConfirmDelete(null)}>
-                      Cancel
-                    </button>
-                    <button className="px-5 h-11 rounded-xl bg-red-500 text-white hover:bg-red-600 transition" onClick={() => { deleteListDb(confirmDelete.id); setConfirmDelete(null) }}>
-                      Delete
-                    </button>
+                    <div className="flex justify-end gap-3 pt-5 border-t border-gray-100">
+                      <button className="px-5 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors text-sm font-medium" onClick={() => setConfirmDelete(null)}>
+                        Cancel
+                      </button>
+                      <button className="px-5 h-10 rounded-xl bg-red-500 text-white hover:bg-red-600 transition-colors text-sm font-medium" onClick={() => { deleteListDb(confirmDelete.id); setConfirmDelete(null) }}>
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
 
             </>
             :
             <>
-            <div className="w-full flex items-center justify-center py-20 absolute left-0">
-              <div className="flex flex-col items-center gap-6">
-                <div className="w-20 h-20 flex items-center justify-center rounded-full bg-linear-to-br from-gray-100 to-white shadow-inner">
-                  <svg className="animate-spin w-10 h-10 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-                  </svg>
-                </div>
-
-                <div className="text-center">
-                  <h2 className="text-lg font-semibold text-gray-900">Loading list</h2>
-                  <p className="text-sm text-gray-500 mt-1">Fetching your items — this will only take a moment.</p>
+              <div className="w-full flex items-center justify-center py-20 absolute left-0">
+                <div className="flex flex-col items-center gap-6">
+                  <div className="w-20 h-20 flex items-center justify-center rounded-full bg-linear-to-br from-gray-100 to-white shadow-inner">
+                    <svg className="animate-spin w-10 h-10 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                    </svg>
+                  </div>
+                  <div className="text-center">
+                    <h2 className="text-lg font-semibold text-gray-900">Loading list</h2>
+                    <p className="text-sm text-gray-400 mt-1">Fetching your items — this will only take a moment.</p>
+                  </div>
                 </div>
               </div>
-            </div>
             </>
             }
-            </div>
           </div>
         </div>
-        {/* Create list */}
-        <div className={`w-full h-screen ${activeContainer ? 'flex' : 'hidden'} fixed`}>
-          <div className={`w-[95%] max-w-200 flex flex-col bg-white/20 backdrop-blur-2xl border border-gray-300 rounded-2xl fixed ${activeContainer ? 'top-[50%]' : 'top-0'} left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-10 ${activeContainer ? 'opacity' : 'opacity-0'} transition duration-200`}>
-            
-            <div className="w-full flex justify-end cursor-pointer" onClick={() => setActiveContainer(false)}>
+
+      </div>
+
+      {/* Create list */}
+      <div className={`w-full h-screen ${activeContainer ? 'flex' : 'hidden'} fixed inset-0 items-center justify-center bg-black/30 backdrop-blur-sm z-10`}>
+        <div className="w-[95%] max-w-lg bg-white rounded-2xl shadow-2xl border border-gray-200 p-8">
+
+          <div className="flex items-center justify-between mb-6">
+            <h1 className="text-xl font-semibold text-gray-900">Create List</h1>
+            <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors cursor-pointer" onClick={() => setActiveContainer(false)}>
               <Image src={closeIcon} alt="CloseX" />
+            </button>
+          </div>
+
+          <div className="space-y-5">
+
+            {/* ── List name ── */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
+              <input className={`w-full h-11 px-4 rounded-xl bg-gray-50 border outline-none transition text-sm ${nameListError ? 'border-red-400 focus:border-red-400' : 'border-gray-200 focus:border-gray-400 focus:bg-white'}`}
+                type="text" name="name" id="list-name" value={nameList}
+                onChange={(e) => {
+                  setNameList(e.target.value)
+                  if (nameListError) setNameListError(validateListName(e.target.value))
+                }}
+                onBlur={() => setNameListError(validateListName(nameList))}
+              />
+              {nameListError && (
+                <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1">
+                  <span>⚠</span> {nameListError}
+                </p>
+              )}
             </div>
-            <h1 className="font-medium text-3xl">Create List</h1>
 
-            <div className="mt-10">
-
-              {/* ── List name ── */}
-              <div className="flex flex-col gap-2 relative">
-                <span className="font-semibold">Name</span>
-                <input
-                  className={`border w-full h-10 rounded-3xl pl-5 transition-colors ${nameListError ? 'border-red-400 focus:outline-none' : 'border-gray-300 focus:outline-none'}`}
-                  type="text"
-                  name="name"
-                  id="list-name"
-                  value={nameList}
-                  onChange={(e) => {
-                    setNameList(e.target.value)
-                    if (nameListError) setNameListError(validateListName(e.target.value))
-                  }}
-                  onBlur={() => setNameListError(validateListName(nameList))}
-                />
-                {nameListError && (
-                  <p className="text-red-500 text-sm flex items-center gap-1">
-                    <span>⚠</span> {nameListError}
-                  </p>
-                )}
-              </div>
-
-              {/* ── Add people ── */}
-              <div className="mt-5">
-                <p className="font-semibold">Add people</p>
-                <div>
-                  <div className="flex relative items-center justify-center">
-                    <span className="absolute top-6.5 left-3">
-                      <Image src={addUser} alt="Add-user-icon" />
-                    </span>
-                    <input
-                      className={`border w-full h-10 pl-10 flex-wrap rounded-3xl mt-4 transition-colors ${inviteEmailError ? 'border-red-400 focus:outline-none' : 'border-gray-300 focus:outline-none'}`}
-                      type="email"
-                      name="email-users"
-                      value={peopleInvited}
-                      onChange={(e) => {
-                        setPeopleInvited(e.target.value)
-                        if (inviteEmailError) setInviteEmailError(null)
-                      }}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                          e.preventDefault()
-                          addUserToList(peopleInvited)
-                        }
-                      }}
-                    />
-                    <button
-                      type="button"
-                      className="flex-1/3 ml-5 h-12 bg-blue-400/40 rounded-3xl transform translate-y-2 transition-colors duration-200 hover:bg-blue-400 hover:text-white text-xs sm:text-lg"
-                      onClick={() => addUserToList(peopleInvited)}
-                    >
-                      Add user
-                    </button>
-                  </div>
-
-                  {/* Invite error */}
-                  {inviteEmailError && (
-                    <p className="text-red-500 text-sm mt-2 flex items-center gap-1">
-                      <span>⚠</span> {inviteEmailError}
-                    </p>
-                  )}
-
-                  {/* ── People invited list ── */}
-                  <div className="mt-5 flex flex-col gap-3">
-                    {peopleInvitedArr.map((people: string, inx: number) => (
-                      <div
-                        className="w-full h-12 flex items-center justify-start border border-gray-400 rounded-3xl hover:bg-gray-100 hover:shadow-md transform hover:-translate-y-0.5 transition duration-200"
-                        key={`${people}-${inx}`}
-                      >
-                        <div className="w-[95%] flex pl-5 justify-between">
-                          <div className="flex gap-2">
-                            <Image src={userList} alt="userExample" width={25} height={25} />
-                            {people}
-                          </div>
-                          <Image
-                            className="cursor-pointer"
-                            src={trashbag}
-                            alt="trashbag-deleteUser"
-                            onClick={() => deleteUserListInvited(people)}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+            {/* ── Add people ── */}
+            <div>
+              <p className="text-sm font-medium text-gray-700 mb-2">Add people</p>
+              <div className="flex gap-2">
+                <div className="relative flex-1">
+                  <span className="absolute top-1/2 -translate-y-1/2 left-3">
+                    <Image src={addUser} alt="Add-user-icon" />
+                  </span>
+                  <input className={`w-full h-11 pl-10 pr-4 rounded-xl bg-gray-50 border outline-none transition text-sm ${inviteEmailError ? 'border-red-400 focus:border-red-400' : 'border-gray-200 focus:border-gray-400 focus:bg-white'}`}
+                    type="email" name="email-users" value={peopleInvited}
+                    onChange={(e) => {
+                      setPeopleInvited(e.target.value)
+                      if (inviteEmailError) setInviteEmailError(null)
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault()
+                        addUserToList(peopleInvited)
+                      }
+                    }}
+                  />
                 </div>
+                <button type="button" className="px-4 h-11 bg-gray-900 text-white rounded-xl text-sm font-medium hover:bg-gray-700 transition-colors"
+                  onClick={() => addUserToList(peopleInvited)}
+                >
+                  Add
+                </button>
               </div>
 
-              <button
-                onClick={createDbData}
-                className="w-full h-14 mt-8 rounded-3xl bg-black text-white font-semibold transition-colors duration-200 hover:bg-gray-800 hover:shadow-xl"
-              >
-                Create List
-              </button>
+              {inviteEmailError && (
+                <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1">
+                  <span>⚠</span> {inviteEmailError}
+                </p>
+              )}
+
+              {/* ── People invited list ── */}
+              <div className="mt-3 flex flex-col gap-2">
+                {peopleInvitedArr.map((people: string, inx: number) => (
+                  <div className="w-full h-11 flex items-center justify-between px-4 border border-gray-200 rounded-xl bg-gray-50" key={`${people}-${inx}`}>
+                    <div className="flex items-center gap-2">
+                      <Image src={userList} alt="userExample" width={18} height={18} />
+                      <span className="text-sm text-gray-700">{people}</span>
+                    </div>
+                    <Image className="cursor-pointer opacity-40 hover:opacity-100 transition-opacity" src={trashbag} alt="trashbag-deleteUser"
+                      onClick={() => deleteUserListInvited(people)}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
 
           </div>
+
+          <button onClick={createDbData} className="w-full h-11 mt-6 rounded-xl bg-gray-900 text-white text-sm font-medium hover:bg-gray-700 transition-colors">
+            Create List
+          </button>
+
         </div>
-        {/* Alert */}
-        {showAlert && (
-          <div className="fixed bottom-8 right-8 w-96 bg-white shadow-lg border border-gray-200 rounded-lg p-4 flex items-start gap-3">
-            <div className="w-3 h-3 rounded-full bg-blue-500 mt-2" />
-            <div className="flex-1">
-              <p className="font-semibold">Notification</p>
-              <p className="text-sm text-gray-600 mt-1">{creatingError}</p>
-            </div>
-            <button onClick={()=> setShowAlert(false)} className="text-sm text-gray-500 hover:text-gray-800">Close</button>
+      </div>
+
+      {/* Alert */}
+      {showAlert && (
+        <div className="fixed bottom-6 right-6 w-80 bg-white shadow-xl border border-gray-200 rounded-2xl p-4 flex items-start gap-3">
+          <div className="w-2 h-2 rounded-full bg-blue-500 mt-1.5 shrink-0" />
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold text-gray-900">Notification</p>
+            <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">{creatingError}</p>
           </div>
-        )}
-      </main>
+          <button onClick={()=> setShowAlert(false)} className="text-xs text-gray-400 hover:text-gray-700 transition-colors shrink-0">Close</button>
+        </div>
+      )}
+    </main>
     </> 
   );
 }
