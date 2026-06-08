@@ -459,7 +459,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
             </div>
           </div>
           <div className="flex gap-3">
-            <button className="px-4 h-10 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">Share</button>
+            <button className="px-4 h-10 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer">Share</button>
             <button className="px-4 h-10 rounded-xl bg-gray-900 text-white text-sm font-medium hover:bg-gray-700 transition-colors cursor-pointer" onClick={()=> setOpenDiv(true)}>+ Add Product</button>
           </div>
         </div>
