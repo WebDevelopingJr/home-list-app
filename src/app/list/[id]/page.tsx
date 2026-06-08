@@ -267,7 +267,7 @@ export default function ListDetail() {
       )
     })
 
-    setShowArrList(filtArr)  // ✅ solo esto, sin cerrar el modal
+    setShowArrList(filtArr) 
   }
   /* UPLOAD IMAGE */
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -457,6 +457,8 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
       
         if(data) {
           setArrInfo(data[0])
+          console.log(data[0])
+          console.log('This is the userData: '+data)
           setDataArrList(data[0].itemsList)
           setShowArrList(data[0].itemsList)
         }
