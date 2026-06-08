@@ -520,7 +520,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
 
       <div className="flex items-center justify-center flex-col gap-6 mt-6">
         {/* Quick status filter chips */}
-        <div className="w-[90%] max-w-7xl flex items-center justify-between">
+        <div className="w-[90%] max-w-7xl flex items-center justify-between flex-wrap gap-5">
           <div className="flex gap-2 flex-wrap">
             <div className={`h-8 px-4 text-xs font-medium flex items-center rounded-lg border cursor-pointer transition-all ${filtState === '' ? 'bg-gray-900 border-gray-900 text-white' : 'bg-white border-gray-200 text-gray-600 hover:border-gray-400'}`}
               onClick={()=> { setFiltState('') }}>All</div>
