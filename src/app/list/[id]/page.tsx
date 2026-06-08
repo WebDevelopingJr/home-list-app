@@ -253,6 +253,14 @@ export default function ListDetail() {
   }
 
 
+  /* fast filter  */
+
+  const fastFilter = (stateFilter: StateAviable | '') => {
+    setFiltState(stateFilter)
+    if(filtState) {
+      filterCategory()
+    }
+  }
   /* UPLOAD IMAGE */
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [pendingFile, setPendingFile] = useState<File | null>(null)
@@ -554,16 +562,16 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
         <div className="w-[90%] max-w-7xl flex items-center justify-between flex-wrap gap-5">
           <div className="flex gap-2 flex-wrap">
             <div className={`h-8 px-4 text-xs font-medium flex items-center rounded-lg border cursor-pointer transition-all ${filtState === '' ? 'bg-gray-900 border-gray-900 text-white' : 'bg-white border-gray-200 text-gray-600 hover:border-gray-400'}`}
-              onClick={()=> { setFiltState('') }}>All</div>
+              onClick={()=> { fastFilter('') }}>All</div>
             <div className={`h-8 px-4 text-xs font-medium flex items-center rounded-lg border cursor-pointer transition-all ${filtState === 'Aviable' ? 'bg-green-600 border-green-600 text-white' : 'bg-green-50 border-green-200 text-green-700 hover:border-green-400'}`}
-              onClick={()=> { setFiltState('Aviable') }}>Available</div>
+              onClick={()=> { fastFilter('Aviable') }}>Available</div>
             <div className={`h-8 px-4 text-xs font-medium flex items-center rounded-lg border cursor-pointer transition-all ${filtState === 'Low stock' ? 'bg-yellow-500 border-yellow-500 text-white' : 'bg-yellow-50 border-yellow-200 text-yellow-700 hover:border-yellow-400'}`}
-              onClick={()=> { setFiltState('Low stock') }}>Low stock</div>
+              onClick={()=> { fastFilter('Low stock') }}>Low stock</div>
             <div className={`h-8 px-4 text-xs font-medium flex items-center rounded-lg border cursor-pointer transition-all ${filtState === 'No stock' ? 'bg-red-600 border-red-600 text-white' : 'bg-red-50 border-red-200 text-red-700 hover:border-red-400'}`}
-              onClick={()=> { setFiltState('No stock') }}>No stock</div>
+              onClick={()=> { fastFilter('No stock') }}>No stock</div>
           </div>
-          <button className="h-8 px-4 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 transition-colors block"
-            onClick={()=> filterCategory()}>Apply</button>
+          {/* <button className="h-8 px-4 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 transition-colors block"
+            onClick={()=> filterCategory()}>Apply</button> */}
         </div>
 
         {/* Items table */}
