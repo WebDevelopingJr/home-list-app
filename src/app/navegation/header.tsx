@@ -57,12 +57,12 @@ export default function Header() {
 
           <div className="flex items-center gap-2.5 cursor-pointer" onClick={()=> router.push('/')}>
             <Image src={logoWeb} alt="logoImg" className="w-8 h-8"/>
-            <p className="font-bold text-gray-900 text-lg tracking-tight">HomeList</p>
+            <p className="font-bold text-sky-500 text-lg tracking-tight">HomeList</p>
           </div>
 
           {userInfo ?
             <div className="relative">
-              <Image src={userInfo.imgProfile ? userInfo.imgProfile : nonUser} className="cursor-pointer rounded-xl object-cover border-2 border-gray-200 hover:border-gray-400 transition-colors" width={38} height={38} alt="noprofilepic"
+              <Image src={userInfo.imgProfile ? userInfo.imgProfile : nonUser} className="cursor-pointer rounded-xl object-cover border-2 border-gray-200 hover:border-sky-300 transition-colors" width={38} height={38} alt="noprofilepic"
                 onClick={()=> setUserMenu(el => !el)}/>
 
               {userMenu && (
@@ -97,7 +97,7 @@ export default function Header() {
               <Link className="h-9 px-4 flex items-center text-sm font-medium text-gray-700 rounded-xl border border-gray-200 hover:bg-gray-50 transition-colors" href={'/login'}>
                 Log in
               </Link>
-              <Link className="h-9 px-4 flex items-center text-sm font-medium text-white bg-gray-900 rounded-xl hover:bg-gray-700 transition-colors" href={'/signup'}>
+              <Link className="h-9 px-4 flex items-center text-sm font-medium text-white bg-sky-500 rounded-xl hover:bg-sky-600 transition-colors" href={'/signup'}>
                 Sign up
               </Link>
             </div>
