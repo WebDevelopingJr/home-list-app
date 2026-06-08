@@ -418,13 +418,13 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
     {arrInfo && dataArrList ? 
     <>
       {/* Header */}
-      <div className="w-full flex justify-center items-center mt-8 mb-6">
+      <div className="w-full flex justify-center items-center pt-8 pb-8 bg-[#1b345f]">
         <div className="w-[90%] max-w-500 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
             <Link href={'/dashboard'}><div className="w-9 h-9 flex items-center justify-center rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors border border-gray-200"><Image src={returnIcon} alt="returnDashboard" /></div></Link>
             <div>
               <p className="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-0.5">List</p>
-              <h1 className="text-2xl font-semibold text-gray-900 tracking-tight">{arrInfo.name}</h1>
+              <h1 className="text-2xl font-semibold text-white tracking-tight">{arrInfo.name}</h1>
             </div>
           </div>
           <div className="flex gap-3">
@@ -531,7 +531,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
             <div className={`h-8 px-4 text-xs font-medium flex items-center rounded-lg border cursor-pointer transition-all ${filtState === 'No stock' ? 'bg-red-600 border-red-600 text-white' : 'bg-red-50 border-red-200 text-red-700 hover:border-red-400'}`}
               onClick={()=> { setFiltState('No stock') }}>No stock</div>
           </div>
-          <button className="h-8 px-4 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 transition-colors hidden sm:block"
+          <button className="h-8 px-4 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 transition-colors block"
             onClick={()=> filterCategory()}>Apply</button>
         </div>
 
