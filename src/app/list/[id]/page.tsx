@@ -373,6 +373,37 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
     setDeletingImage(false)
   }
 
+  /* Edit people from arr */
+  const [peopleArr, setPeopleArr] = useState<string[]>(arrInfo.people ?? [])
+  const [newEmail, setNewEmail] = useState('')
+  const [emailError, setEmailError] = useState<string | null>(null)
+
+  const addPerson = () => {
+    const trimmed = newEmail.trim().toLowerCase()
+    if (!trimmed) { setEmailError('Enter an email'); return }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) { setEmailError('Invalid email'); return }
+    if (peopleArr.includes(trimmed)) { setEmailError('Already added'); return }
+    setPeopleArr(prev => [...prev, trimmed])
+    setNewEmail('')
+    setEmailError(null)
+  }
+
+  const removePerson = (email: string) => {
+    setPeopleArr(prev => prev.filter(p => p !== email))
+  }
+
+  const editListDb = async () => {
+    try {
+      const supabase = createClient()
+      await supabase
+        .from('list-elements')
+        .update({ people: peopleArr })
+        .eq('id', params?.id)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
 
 
   /* Functions lists */
@@ -429,7 +460,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
           </div>
           <div className="flex gap-3">
             <button className="px-4 h-10 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">Share</button>
-            <button className="px-4 h-10 rounded-xl bg-gray-900 text-white text-sm font-medium hover:bg-gray-700 transition-colors" onClick={()=> setOpenDiv(true)}>+ Add Product</button>
+            <button className="px-4 h-10 rounded-xl bg-gray-900 text-white text-sm font-medium hover:bg-gray-700 transition-colors cursor-pointer" onClick={()=> setOpenDiv(true)}>+ Add Product</button>
           </div>
         </div>
       </div>
@@ -437,7 +468,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
       {/* Sticky search + filter bar */}
       <div className="w-full flex items-center justify-center sticky top-0 z-10 bg-white/80 backdrop-blur-xl border-b border-gray-100 py-3">
         <div className="w-[90%] max-w-500 flex items-center justify-between gap-3">
-          <p className="text-sm text-gray-400 hidden sm:block">{dataArrList.length} items</p>
+          <p className="text-sm text-gray-700 hidden sm:block">{dataArrList.length} items</p>
           <div className="flex gap-2 ml-auto">
             <div className="flex items-center justify-center relative">
               <Image src={searchIcon} alt="search" className="absolute left-3 w-4 h-4"/>
@@ -805,6 +836,63 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
           </div>
         </div>
       </div>
+      
+
+      {/* Share to people div */}
+      <div className="w-full max-w-lg bg-white border border-gray-200 rounded-2xl shadow-sm p-6">
+
+        <div className="mb-5">
+          <h1 className="text-base font-semibold text-gray-900">Members</h1>
+          <p className="text-xs text-gray-400 mt-0.5">Add or remove people from this list.</p>
+        </div>
+
+        {/* Member list */}
+        <div className="flex flex-col gap-2 mb-4">
+          {peopleArr.map((el, _) => (
+            <div key={`${el}-${_}`} className="flex items-center justify-between px-4 py-2.5 rounded-xl border border-gray-100 bg-gray-50">
+              <div className="flex items-center gap-3">
+                <div className="w-7 h-7 rounded-lg bg-sky-100 border border-sky-200 flex items-center justify-center shrink-0">
+                  <span className="text-xs font-semibold text-sky-600">{el[0].toUpperCase()}</span>
+                </div>
+                <p className="text-sm text-gray-700 truncate">{el}</p>
+              </div>
+              {_ !== 0 && (
+                <button className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-red-50 hover:text-red-500 text-gray-300 transition-colors"
+                  onClick={() => removePerson(el)}>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Add email input */}
+        <div className="flex gap-2">
+          <div className="flex-1 relative">
+            <input type="email" placeholder="Add by email" value={newEmail} className={`w-full h-10 px-4 rounded-xl bg-gray-50 border outline-none transition text-sm ${emailError ? 'border-red-400 focus:border-red-400' : 'border-gray-200 focus:border-gray-400 focus:bg-white'}`}
+              onChange={(e) => { setNewEmail(e.target.value); if (emailError) setEmailError(null) }}
+              onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addPerson() } }}
+            />
+          </div>
+          <button className="h-10 px-4 rounded-xl bg-sky-500 text-white text-sm font-medium hover:bg-sky-600 transition-colors"
+            onClick={addPerson}>
+            Add
+          </button>
+        </div>
+
+        {emailError && (
+          <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1"><span>⚠</span> {emailError}</p>
+        )}
+
+        {/* Save */}
+        <button className="w-full h-10 mt-5 rounded-xl bg-gray-900 text-white text-sm font-medium hover:bg-gray-700 transition-colors"
+          onClick={editListDb}>
+          Save changes
+        </button>
+
+      </div>
 
       {/* Upload Image modal */}
       {showImagePanel &&
@@ -879,6 +967,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
           </div>
         </div>
       )}
+      
     </>
     :
     <>
