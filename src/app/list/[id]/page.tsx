@@ -864,7 +864,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
       
 
       {/* Share to people div */}
-      <div className="w-full max-w-lg bg-white border border-gray-200 rounded-2xl shadow-sm p-6">
+      <div className="w-full max-w-lg bg-white border border-gray-200 rounded-2xl shadow-sm p-6 absolute z-10 top-1/2 left-1/2 transform translate-1/2">
 
         <div className="mb-5">
           <h1 className="text-base font-semibold text-gray-900">Members</h1>
