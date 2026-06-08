@@ -402,7 +402,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
     console.log('this is the people arr ' + peopleArr)
     console.log('this is the email trimmed ' + trimmed)
     console.log('this is the email newEmail ' + newEmail)
-    setPeopleArr(prev => [...prev, trimmed])
+    setPeopleArr([...arrInfo.people, trimmed])
     setNewEmail('')
     setEmailError(null)
   }
