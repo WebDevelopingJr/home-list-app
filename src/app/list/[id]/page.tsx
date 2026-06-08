@@ -418,6 +418,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
         .from('list-elements')
         .update({ people: peopleArr })
         .eq('id', params?.id)
+        console.log(peopleArr)
     } catch (err) {
       console.error(err)
     }
