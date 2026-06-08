@@ -390,6 +390,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
   }
 
   /* Edit people from arr */
+  const [ openEditPanel, setOpenEditPanel ] = useState(false)
   const [peopleArr, setPeopleArr] = useState<string[]>(arrInfo.people ?? [])
   const [newEmail, setNewEmail] = useState('')
   const [emailError, setEmailError] = useState<string | null>(null)
@@ -484,7 +485,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
             </div>
           </div>
           <div className="flex gap-3">
-            <button className="px-4 h-10 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer">Share</button>
+            <button className="px-4 h-10 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer" onClick={()=> setOpenEditPanel(el => !el)}>Share</button>
             <button className="px-4 h-10 rounded-xl bg-gray-900 text-white text-sm font-medium hover:bg-gray-700 transition-colors cursor-pointer" onClick={()=> setOpenDiv(true)}>+ Add Product</button>
           </div>
         </div>
@@ -864,12 +865,23 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
       
 
       {/* Share to people div */}
-      <div className="w-full max-w-lg bg-white border border-gray-200 rounded-2xl shadow-sm p-6 absolute z-10 top-1/2 left-1/2 transform translate-1/2">
+      <div className={`w-full max-w-lg bg-white border ${openEditPanel ? 'block' : 'hidden'} border-gray-200 rounded-2xl shadow-sm p-6  absolute z-10 top-1/2 left-1/2 transform translate-1/2`}>
 
-        <div className="mb-5">
-          <h1 className="text-base font-semibold text-gray-900">Members</h1>
-          <p className="text-xs text-gray-400 mt-0.5">Add or remove people from this list.</p>
+      <div className="mb-5">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-base font-semibold text-gray-900">Members</h1>
+            <p className="text-xs text-gray-400 mt-0.5">Add or remove people from this list.</p>
+          </div>
+          <button className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors"
+            onClick={() => setOpenEditPanel(false)}
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
+      </div>
 
         {/* Member list */}
         <div className="flex flex-col gap-2 mb-4">
