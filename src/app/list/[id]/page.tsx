@@ -676,7 +676,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
                           <div className="flex items-center gap-3">
                             <label className="text-xs text-blue-500 cursor-pointer hover:text-blue-600 font-medium">
                               Replace
-                              <input type="file" accept="image/png, image/jpeg, image/webp" className="hidden"
+                              <input type="file" accept="image/*" className="hidden"
                                 onChange={(e) => { const file = e.target.files?.[0]; if (file) replaceImage(file, itemToEdit) }}
                               />
                             </label>
