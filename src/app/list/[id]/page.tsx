@@ -970,7 +970,7 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
                       <p className="text-sm text-gray-400 mt-1">PNG, JPG, or WEBP</p>
                     </div>
                   )}
-                  <input type="file" accept="image/*" className="hidden" capture="environment" ref={fileInputRef}
+                  <input type="file" accept="image/*" className="hidden" capture="user" ref={fileInputRef}
                     onChange={(e) => { const file = e.target.files?.[0]; if (file) setPendingFile(file) }}
                   />
                   <button className="h-9 px-4 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors"
