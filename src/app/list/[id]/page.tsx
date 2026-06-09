@@ -270,6 +270,7 @@ export default function ListDetail() {
     setShowArrList(filtArr) 
   }
   /* UPLOAD IMAGE */
+  const cameraInputRef = useRef<HTMLInputElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [pendingFile, setPendingFile] = useState<File | null>(null)
 
@@ -970,11 +971,22 @@ const addImageLink = async (id: string, targetElement: ListDb) => {
                       <p className="text-sm text-gray-400 mt-1">PNG, JPG, or WEBP</p>
                     </div>
                   )}
-                  <input type="file" accept="image/*" className="hidden" capture="user" ref={fileInputRef}
+
+                  {/* Input galería */}
+                  <input type="file" accept="image/*" className="hidden" ref={fileInputRef}
                     onChange={(e) => { const file = e.target.files?.[0]; if (file) setPendingFile(file) }}
                   />
-                  <button className="h-9 px-4 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors"
-                    onClick={() => fileInputRef.current?.click()}>Browse files</button>
+                  {/* Input cámara */}
+                  <input type="file" accept="image/*" capture="environment" className="hidden" ref={cameraInputRef}
+                    onChange={(e) => { const file = e.target.files?.[0]; if (file) setPendingFile(file) }}
+                  />
+
+                  <div className="flex gap-2">
+                    <button className="h-9 px-4 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors"
+                      onClick={() => fileInputRef.current?.click()}>Browse files</button>
+                    <button className="h-9 px-4 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors block sm:hidden"
+                      onClick={() => cameraInputRef.current?.click()}>📷 Take photo</button>
+                  </div>
                 </div>
               </div>
             </div>
